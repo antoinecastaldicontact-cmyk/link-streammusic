@@ -12,9 +12,7 @@ function getExternalId(): string {
 export async function trackDspEvent(
   eventType: "view" | "click",
   dspName?: string,
-  enabled: boolean = true
 ) {
-  if (!enabled) return;
   try {
     await supabase.from("dsp_events").insert({
       event_type: eventType,

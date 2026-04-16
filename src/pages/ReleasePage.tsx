@@ -43,15 +43,15 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
       content_name: release.title,
       content_category: release.artist,
     }, trackingEnabled);
-    trackDspEvent("view", undefined, trackingEnabled);
+    trackDspEvent("view", undefined);
   }, [release]);
 
   const handleDspClick = (dspName: string) => {
-    trackEvent("ViewContent", {
+    trackEvent("Lead", {
       content_name: release.title,
       content_category: dspName,
     }, trackingEnabled);
-    trackDspEvent("click", dspName, trackingEnabled);
+    trackDspEvent("click", dspName);
   };
 
   return (
