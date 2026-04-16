@@ -28,15 +28,17 @@ export function getExternalId(): string {
 export async function trackEvent(
   eventName: string,
   customData: Record<string, string> = {},
-  enabled: boolean = true
+  consent: boolean = true
 ) {
-  if (!enabled) return;
   const eventId = crypto.randomUUID();
+  const enrichedData = { ...customData, content_type: "music" };
 
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", eventName, customData, { eventID: eventId });
+  // Browser pixel — consent-gated
+  if (consent && typeof window !== "undefined" && (window as any).fbq) {
+    (window as any).fbq("track", eventName, enrichedData, { eventID: eventId });
   }
 
+  // CAPIG server-side — ALWAYS fires
   const event = {
     event_name: eventName,
     event_id: eventId,
@@ -45,11 +47,10 @@ export async function trackEvent(
     action_source: "website",
     user_data: {
       client_user_agent: navigator.userAgent,
-      fbp: getCookie("_fbp"),
-      fbc: getFbc(),
+      ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
       external_id: getExternalId(),
     },
-    custom_data: customData,
+    custom_data: enrichedData,
   };
 
   try {
