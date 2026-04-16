@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "tara-mcdonald-spaceman",
+    artist: "Tara McDonald",
+    title: "Spaceman",
+    releaseType: "Single",
+    artworkUrl: "/artworks/tara-mcdonald-spaceman.webp",
+    ogTitle: "Tara McDonald - Spaceman",
+    ogDescription: "Listen to Spaceman by Tara McDonald, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/5LojXATHrueJw848BAtzMm?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tara-mcdonald-spaceman&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/youre-a-spaceman/1880366149?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tara-mcdonald-spaceman&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "smush-41",
     artist: "smush",
     title: "41",
