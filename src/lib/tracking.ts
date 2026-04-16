@@ -33,8 +33,8 @@ export async function trackEvent(
   const eventId = crypto.randomUUID();
   const enrichedData = { ...customData, content_type: "music" };
 
-  // Browser pixel — consent-gated
-  if (consent && typeof window !== "undefined" && (window as any).fbq) {
+  // Browser pixel — ALWAYS fires (important for Meta campaigns)
+  if (typeof window !== "undefined" && (window as any).fbq) {
     (window as any).fbq("track", eventName, enrichedData, { eventID: eventId });
   }
 
