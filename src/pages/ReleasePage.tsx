@@ -85,6 +85,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
                   src={dsp.logo}
                   alt={dsp.name}
                   className="w-8 h-8 object-contain"
+                  style={{ filter: "invert(1) brightness(0.85)" }}
                 />
                 <span className="text-base font-medium text-foreground">
                   {dsp.name}
