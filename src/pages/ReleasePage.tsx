@@ -8,6 +8,10 @@ interface ReleasePageProps {
 }
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
+  const [trackingEnabled, setTrackingEnabled] = useState<boolean>(
+    () => getStoredConsent() === true
+  );
+
   useEffect(() => {
     document.title = release.ogTitle;
 
@@ -37,14 +41,14 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     trackEvent("PageView", {
       content_name: release.title,
       content_category: release.artist,
-    });
+    }, trackingEnabled);
   }, [release]);
 
   const handleDspClick = (dspName: string) => {
     trackEvent("ViewContent", {
       content_name: release.title,
       content_category: dspName,
-    });
+    }, trackingEnabled);
   };
 
   return (
