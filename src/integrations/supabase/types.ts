@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dsp_events: {
+        Row: {
+          created_at: string
+          dsp_name: string | null
+          event_type: string
+          external_id: string | null
+          id: string
+          page_path: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          dsp_name?: string | null
+          event_type: string
+          external_id?: string | null
+          id?: string
+          page_path: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          dsp_name?: string | null
+          event_type?: string
+          external_id?: string | null
+          id?: string
+          page_path?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
