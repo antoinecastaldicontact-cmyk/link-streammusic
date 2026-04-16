@@ -1,12 +1,12 @@
 const CAPIG_URL = "https://capig.stape.at/event";
 const CAPIG_KEY = "REPLACE_WITH_YOUR_STAPE_KEY";
 
-function getCookie(name: string): string | null {
+export function getCookie(name: string): string | null {
   const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
   return v ? v[2] : null;
 }
 
-function getFbc(): string | null {
+export function getFbc(): string | null {
   const fbclid = new URLSearchParams(window.location.search).get("fbclid");
   if (fbclid) {
     const fbc = `fb.1.${Date.now()}.${fbclid}`;
@@ -16,7 +16,7 @@ function getFbc(): string | null {
   return getCookie("_fbc");
 }
 
-function getExternalId(): string {
+export function getExternalId(): string {
   let id = localStorage.getItem("era_eid");
   if (!id) {
     id = crypto.randomUUID();
