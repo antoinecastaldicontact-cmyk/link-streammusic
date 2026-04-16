@@ -39,8 +39,9 @@ const CookieBanner = ({ onAccept, onDecline }: CookieBannerProps) => {
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-foreground/10 px-5 py-4">
       <div className="max-w-[390px] mx-auto">
         <p className="text-xs text-foreground/60 mb-3">
-          We use cookies for performance tracking (Meta Pixel + Stape CAPIG).
-          By accepting, you allow server-side event forwarding.
+          Nous utilisons des cookies pour mesurer les performances et améliorer
+          votre expérience. En acceptant, vous consentez à l'utilisation de ces
+          cookies.
         </p>
         <div className="flex gap-3">
           <button
