@@ -9,7 +9,7 @@ interface ReleasePageProps {
 }
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
-  const [trackingEnabled, setTrackingEnabled] = useState<boolean>(
+  const [consent, setConsent] = useState<boolean>(
     () => getStoredConsent() === true
   );
 
@@ -39,18 +39,26 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     }
     descEl.setAttribute("content", release.ogDescription);
 
-    trackEvent("PageView", {
-      content_name: release.title,
-      content_category: release.artist,
-    });
-    trackDspEvent("view", undefined);
-  }, [release]);
+    trackEvent(
+      "PageView",
+      {
+        content_name: release.title,
+        content_category: release.artist,
+      },
+      consent
+    );
+    trackDspEvent("view");
+  }, [release, consent]);
 
   const handleDspClick = (dspName: string) => {
-    trackEvent("Lead", {
-      content_name: release.title,
-      content_category: dspName,
-    });
+    trackEvent(
+      "ViewContent",
+      {
+        content_name: release.title,
+        content_category: dspName,
+      },
+      consent
+    );
     trackDspEvent("click", dspName);
   };
 
@@ -108,8 +116,8 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
         ))}
       </div>
       <CookieBanner
-        onAccept={() => setTrackingEnabled(true)}
-        onDecline={() => setTrackingEnabled(false)}
+        onAccept={() => setConsent(true)}
+        onDecline={() => setConsent(false)}
       />
     </div>
   );
