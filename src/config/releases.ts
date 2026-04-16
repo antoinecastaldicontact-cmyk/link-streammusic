@@ -63,7 +63,7 @@ export const releases: ReleaseConfig[] = [
       },
       {
         name: "Deezer",
-        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/deezer.svg",
+        logo: "/icons/deezer.webp",
         url: "https://www.deezer.com/track/REPLACE",
       },
     ],
