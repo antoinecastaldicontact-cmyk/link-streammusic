@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ReleaseConfig } from "@/config/releases";
 import { trackEvent } from "@/lib/tracking";
+import { trackDspEvent } from "@/lib/dsp-analytics";
 import CookieBanner, { getStoredConsent } from "@/components/CookieBanner";
 
 interface ReleasePageProps {
@@ -42,6 +43,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
       content_name: release.title,
       content_category: release.artist,
     }, trackingEnabled);
+    trackDspEvent("view", undefined, trackingEnabled);
   }, [release]);
 
   const handleDspClick = (dspName: string) => {
@@ -49,6 +51,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
       content_name: release.title,
       content_category: dspName,
     }, trackingEnabled);
+    trackDspEvent("click", dspName, trackingEnabled);
   };
 
   return (
