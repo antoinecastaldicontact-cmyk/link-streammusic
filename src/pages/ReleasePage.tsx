@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ReleaseConfig } from "@/config/releases";
 import { trackEvent } from "@/lib/tracking";
+import CookieBanner, { getStoredConsent } from "@/components/CookieBanner";
 
 interface ReleasePageProps {
   release: ReleaseConfig;

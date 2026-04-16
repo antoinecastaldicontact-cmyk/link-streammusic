@@ -27,8 +27,10 @@ export function getExternalId(): string {
 
 export async function trackEvent(
   eventName: string,
-  customData: Record<string, string> = {}
+  customData: Record<string, string> = {},
+  enabled: boolean = true
 ) {
+  if (!enabled) return;
   const eventId = crypto.randomUUID();
 
   if (typeof window !== "undefined" && (window as any).fbq) {
