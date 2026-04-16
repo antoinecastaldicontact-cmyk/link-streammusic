@@ -1,5 +1,5 @@
 const CAPIG_URL = import.meta.env.VITE_CAPIG_URL ?? "https://capig.stape.at/event";
-const CAPIG_KEY = import.meta.env.VITE_CAPIG_KEY ?? "hchswlqp";
+const CAPIG_KEY = import.meta.env.VITE_CAPIG_KEY ?? "eyJpIjoiaGNoc3dscXAiLCJoIjoiY2FwaWcuc3RhcGUuYXQiLCJrIjoiYTQ0ZjBjNjU3YTJjNzEyN2RmYmJjN2M4NGM4YTQ1NjA3ODExNTE5NmhjaHN3bHFwIn0=";
 
 export function getCookie(name: string): string | null {
   const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
