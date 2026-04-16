@@ -103,6 +103,10 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
           </div>
         ))}
       </div>
+      <CookieBanner
+        onAccept={() => setTrackingEnabled(true)}
+        onDecline={() => setTrackingEnabled(false)}
+      />
     </div>
   );
 };
