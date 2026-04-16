@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ReleaseConfig } from "@/config/releases";
 import { trackEvent } from "@/lib/tracking";
+import CookieBanner, { getStoredConsent } from "@/components/CookieBanner";
 
 interface ReleasePageProps {
   release: ReleaseConfig;
 }
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
+  const [trackingEnabled, setTrackingEnabled] = useState<boolean>(
+    () => getStoredConsent() === true
+  );
+
   useEffect(() => {
     document.title = release.ogTitle;
 
@@ -36,14 +41,14 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     trackEvent("PageView", {
       content_name: release.title,
       content_category: release.artist,
-    });
+    }, trackingEnabled);
   }, [release]);
 
   const handleDspClick = (dspName: string) => {
     trackEvent("ViewContent", {
       content_name: release.title,
       content_category: dspName,
-    });
+    }, trackingEnabled);
   };
 
   return (
@@ -98,6 +103,10 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
           </div>
         ))}
       </div>
+      <CookieBanner
+        onAccept={() => setTrackingEnabled(true)}
+        onDecline={() => setTrackingEnabled(false)}
+      />
     </div>
   );
 };
