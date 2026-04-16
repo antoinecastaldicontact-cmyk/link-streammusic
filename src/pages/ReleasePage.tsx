@@ -42,7 +42,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     trackEvent("PageView", {
       content_name: release.title,
       content_category: release.artist,
-    }, trackingEnabled);
+    });
     trackDspEvent("view", undefined);
   }, [release]);
 
@@ -50,7 +50,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     trackEvent("Lead", {
       content_name: release.title,
       content_category: dspName,
-    }, trackingEnabled);
+    });
     trackDspEvent("click", dspName);
   };
 
