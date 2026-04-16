@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "smush-41",
+    artist: "smush",
+    title: "41",
+    releaseType: "Single",
+    artworkUrl: "/artworks/smush-41.webp",
+    ogTitle: "smush – 41",
+    ogDescription: "Listen to 41 by smush, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2UV0mn7uJoy8pTWpcrrR9p",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/41-single/1855633254",
+      },
+    ],
+  },
+  {
     slug: "tayc-girlfriend",
     artist: "Tayc",
     title: "Girlfriend",
