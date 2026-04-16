@@ -27,17 +27,17 @@ export const releases: ReleaseConfig[] = [
     dsps: [
       {
         name: "Spotify",
-        logo: "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
         url: "REPLACE_URL",
       },
       {
         name: "Apple Music",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "REPLACE_URL",
       },
       {
         name: "Deezer",
-        logo: "https://e-cdns-files.dzcdn.net/cache/images/common/header/logo-deezer-white.svg",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/deezer.svg",
         url: "https://link.deezer.com/s/330vl0ZpyTzlCpYchPdzy",
       },
     ],
@@ -53,17 +53,17 @@ export const releases: ReleaseConfig[] = [
     dsps: [
       {
         name: "Spotify",
-        logo: "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
         url: "https://open.spotify.com/track/REPLACE_WITH_REAL_ID",
       },
       {
         name: "Apple Music",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://music.apple.com/REPLACE",
       },
       {
         name: "Deezer",
-        logo: "https://e-cdns-files.dzcdn.net/cache/images/common/header/logo-deezer-white.svg",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/deezer.svg",
         url: "https://www.deezer.com/track/REPLACE",
       },
     ],
