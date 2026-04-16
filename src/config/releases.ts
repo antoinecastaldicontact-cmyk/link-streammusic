@@ -64,23 +64,18 @@ export const releases: ReleaseConfig[] = [
     title: "Girlfriend",
     releaseType: "Single",
     artworkUrl: "/artworks/tayc-girlfriend.webp",
-    ogTitle: "Tayc – Girlfriend",
+    ogTitle: "Tayc - Girlfriend",
     ogDescription: "Listen to Girlfriend by Tayc, out now on all platforms.",
     dsps: [
       {
         name: "Spotify",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
-        url: "REPLACE_URL",
+        url: "https://open.spotify.com/intl-fr/track/19jskaQ5MXGGMmaqQowfVS?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-girlfriend&utm_content=spotify",
       },
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "REPLACE_URL",
-      },
-      {
-        name: "Deezer",
-        logo: "/icons/deezer.webp",
-        url: "https://link.deezer.com/s/330vl0ZpyTzlCpYchPdzy",
+        url: "https://music.apple.com/fr/album/girlfriend/1886220508?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-girlfriend&utm_content=apple_music",
       },
     ],
   },
