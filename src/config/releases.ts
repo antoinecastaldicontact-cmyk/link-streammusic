@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "dreamstruck-shattered-dreams",
+    artist: "Dreamstruck",
+    title: "Shattered Dreams",
+    releaseType: "Single",
+    artworkUrl: "/artworks/dreamstruck-shattered-dreams.webp",
+    ogTitle: "Dreamstruck - Shattered Dreams",
+    ogDescription: "Listen to Shattered Dreams by Dreamstruck, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/3ZeWbU8TVGXQ5K220qgdYK?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=dreamstruck-shattered-dreams&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/shattered-dreams-edit/1769530938?i=1769531282&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=dreamstruck-shattered-dreams&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "tara-mcdonald-spaceman",
     artist: "Tara McDonald",
     title: "Spaceman",
