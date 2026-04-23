@@ -64,18 +64,35 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
 
   return (
     <div className="min-h-screen bg-background flex justify-center">
-      <div className="w-full max-w-[390px]">
-        <img
-          src={release.artworkUrl}
-          alt={`${release.artist} – ${release.title}`}
-          className="w-full aspect-square object-cover"
-        />
+      <div className="w-full max-w-[420px] flex flex-col">
+        {/* Artwork — capped to ~36vh, centered, with fade to background */}
+        <div className="relative w-full flex justify-center pt-4 pb-2">
+          <div
+            className="relative"
+            style={{ height: "36vh", maxHeight: "360px", aspectRatio: "1 / 1" }}
+          >
+            <img
+              src={release.artworkUrl}
+              alt={`${release.artist} – ${release.title}`}
+              className="h-full w-full object-cover rounded-md shadow-2xl"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-16"
+              style={{
+                background:
+                  "linear-gradient(to bottom, hsl(var(--background) / 0) 0%, hsl(var(--background)) 100%)",
+              }}
+            />
+          </div>
+        </div>
 
-        <div className="text-center py-8">
-          <p className="text-[13px] uppercase tracking-[3px] text-foreground/60 font-medium">
+        {/* Title block — compact */}
+        <div className="text-center px-5 pt-2 pb-4">
+          <p className="text-[12px] uppercase tracking-[3px] text-foreground/60 font-medium">
             {release.artist}
           </p>
-          <h1 className="text-[28px] font-bold uppercase tracking-tight leading-tight text-foreground mt-1">
+          <h1 className="text-[24px] font-bold uppercase tracking-tight leading-tight text-foreground mt-1">
             {release.title}
           </h1>
           <p className="text-[10px] uppercase tracking-[2px] text-foreground/40 mt-1">
@@ -83,37 +100,38 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
           </p>
         </div>
 
-        <div className="h-px bg-foreground/10" />
-
-        {release.dsps.map((dsp, i) => (
-          <div key={dsp.name}>
-            <div className="h-[72px] flex items-center justify-between px-5">
-              <div className="flex items-center gap-4">
+        {/* DSP buttons — hero, full-width filled CTAs */}
+        <div className="flex flex-col gap-2 px-4 pb-8">
+          {release.dsps.map((dsp) => (
+            <a
+              key={dsp.name}
+              href={dsp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => handleDspClick(dsp.name)}
+              className="group flex items-center justify-between gap-3 rounded-md border border-foreground/10 bg-foreground/[0.03] px-4 py-3 transition-all hover:bg-foreground/[0.08] hover:border-foreground/30 active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-3 min-w-0">
                 <img
                   src={dsp.logo}
                   alt={dsp.name}
-                  className="w-8 h-8 object-contain"
-                  style={dsp.logo.endsWith(".svg") ? { filter: "invert(1) brightness(0.85)" } : undefined}
+                  className="w-9 h-9 object-contain shrink-0"
+                  style={
+                    dsp.logo.endsWith(".svg")
+                      ? { filter: "invert(1) brightness(0.95)" }
+                      : undefined
+                  }
                 />
-                <span className="text-base font-medium text-foreground">
+                <span className="text-[15px] font-semibold text-foreground truncate">
                   {dsp.name}
                 </span>
               </div>
-              <a
-                href={dsp.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => handleDspClick(dsp.name)}
-                className="border border-foreground text-foreground text-xs font-medium uppercase tracking-[1.5px] px-6 py-2.5 hover:bg-foreground hover:text-background transition-colors"
-              >
+              <span className="bg-foreground text-background text-xs font-bold uppercase tracking-[1.5px] px-5 py-2.5 rounded-sm transition-transform group-hover:scale-[1.03]">
                 PLAY
-              </a>
-            </div>
-            {i < release.dsps.length - 1 && (
-              <div className="h-px bg-foreground/10" />
-            )}
-          </div>
-        ))}
+              </span>
+            </a>
+          ))}
+        </div>
       </div>
       <CookieBanner
         onAccept={() => setConsent(true)}
