@@ -17,6 +17,32 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "sensey-bandit-chef",
+    artist: "SenSey'",
+    title: "Bandit Chef",
+    releaseType: "Single",
+    artworkUrl: "/artworks/sensey-bandit-chef.webp",
+    ogTitle: "SenSey' - Bandit Chef",
+    ogDescription: "Listen to Bandit Chef by SenSey', out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/44A6TlpNKN3uuXfi2tdjnd?si=8f200382af3747c5&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sensey-bandit-chef&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/bandit-chef/1887943995?i=1887944238&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sensey-bandit-chef&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://link.deezer.com/s/334CvKaxztiRUSJTRlxm0?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sensey-bandit-chef&utm_content=deezer",
+      },
+    ],
+  },
+  {
     slug: "dreamstruck-shattered-dreams",
     artist: "Dreamstruck",
     title: "Shattered Dreams",
