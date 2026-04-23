@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "jey-vazz-you-know",
+    artist: "Jey Vazz",
+    title: "you know",
+    releaseType: "Single",
+    artworkUrl: "/artworks/jey-vazz-you-know.webp",
+    ogTitle: "Jey Vazz - you know",
+    ogDescription: "Listen to you know by Jey Vazz, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/6JXowiCNuSWlF45WH81ODl?si=16432f1333e345c1&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jey-vazz-you-know&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/you-know/1891987304?i=6761902083&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jey-vazz-you-know&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "sensey-bandit-chef",
     artist: "SenSey'",
     title: "Bandit Chef",
