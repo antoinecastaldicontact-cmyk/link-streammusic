@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "alac-if-you-want-it",
+    artist: "Alac",
+    title: "If You Want It",
+    releaseType: "Single",
+    artworkUrl: "/artworks/alac-if-you-want-it.webp",
+    ogTitle: "Alac - If You Want It",
+    ogDescription: "Listen to If You Want It by Alac, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/5eDMp5kLcoHZwtysE0jiEG?si=e2ba08bde2b34315&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=alac-if-you-want-it&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/if-you-want-it/1892503333?i=1892503347&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=alac-if-you-want-it&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "jey-vazz-you-know",
     artist: "Jey Vazz",
     title: "you know",
