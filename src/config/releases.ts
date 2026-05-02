@@ -168,30 +168,4 @@ export const releases: ReleaseConfig[] = [
       },
     ],
   },
-  {
-    slug: "poylow-example-track",
-    artist: "Poylow",
-    title: "Example Track",
-    releaseType: "Single",
-    artworkUrl: "/artworks/poylow-example-track.jpg",
-    ogTitle: "Poylow – Example Track",
-    ogDescription: "Listen to Example Track by Poylow, out now on all platforms.",
-    dsps: [
-      {
-        name: "Spotify",
-        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
-        url: "https://open.spotify.com/track/REPLACE_WITH_REAL_ID",
-      },
-      {
-        name: "Apple Music",
-        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/REPLACE",
-      },
-      {
-        name: "Deezer",
-        logo: "/icons/deezer.webp",
-        url: "https://www.deezer.com/track/REPLACE",
-      },
-    ],
-  },
 ];
