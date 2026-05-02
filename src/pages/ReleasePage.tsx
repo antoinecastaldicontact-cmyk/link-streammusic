@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ReleaseConfig } from "@/config/releases";
 import { trackEvent } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
-import CookieBanner, { getStoredConsent } from "@/components/CookieBanner";
 
 interface ReleasePageProps {
   release: ReleaseConfig;
 }
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
-  const [consent, setConsent] = useState<boolean>(
-    () => getStoredConsent() === true
-  );
+  const hasSentPageView = useRef(false);
 
   useEffect(() => {
+    if (hasSentPageView.current) return;
+    hasSentPageView.current = true;
+
     document.title = release.ogTitle;
 
     const setMeta = (property: string, content: string) => {
@@ -39,16 +39,9 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     }
     descEl.setAttribute("content", release.ogDescription);
 
-    trackEvent(
-      "PageView",
-      {
-        content_name: release.title,
-        content_category: release.artist,
-      },
-      consent
-    );
+    trackEvent("PageView", { content_name: release.title, content_category: release.artist }, true);
     trackDspEvent("view");
-  }, [release, consent]);
+  }, [release]);
 
   const handleDspClick = (dspName: string) => {
     trackEvent(
@@ -57,7 +50,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
         content_name: release.title,
         content_category: dspName,
       },
-      consent
+      true
     );
     trackDspEvent("click", dspName);
   };
@@ -133,10 +126,6 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
           ))}
         </div>
       </div>
-      <CookieBanner
-        onAccept={() => setConsent(true)}
-        onDecline={() => setConsent(false)}
-      />
     </div>
   );
 };
