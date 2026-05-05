@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "elliott-on-s-oubliera",
+    artist: "Elliott",
+    title: "On S'oubliera",
+    releaseType: "Single",
+    artworkUrl: "/artworks/elliott-on-s-oubliera.webp",
+    ogTitle: "Elliott - On S'oubliera",
+    ogDescription: "Listen to On S'oubliera by Elliott, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/6NaQWW8rAovNAsQSC5y5Zb?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=elliott-on-s-oubliera&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/on-soubliera/1889891026?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=elliott-on-s-oubliera&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "alac-if-you-want-it",
     artist: "Alac",
     title: "If You Want It",
