@@ -17,6 +17,27 @@ export interface ReleaseConfig {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "sasson-jamy-nox-superstar",
+    artist: "Sasson, Jamy Nox",
+    title: "Superstar",
+    releaseType: "Single",
+    artworkUrl: "/artworks/maxresdefault-2.webp",
+    ogTitle: "Sasson, Jamy Nox - Superstar",
+    ogDescription: "Listen to Superstar by Sasson and Jamy Nox, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/1yXke6pmnEMBrfSeYswRWR?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://music.apple.com/fr/album/superstar/1893973515?i=1893973522&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "elliott-on-s-oubliera",
     artist: "Elliott",
     title: "On S'oubliera",
