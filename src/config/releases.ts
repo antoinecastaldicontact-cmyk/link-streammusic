@@ -2,6 +2,8 @@ export interface DSP {
   name: string;
   logo: string;
   url: string;
+  /** When false, click is not sent to Meta CAPI / pixel. Defaults to true. */
+  tracked?: boolean;
 }
 
 export type EraGenre =
