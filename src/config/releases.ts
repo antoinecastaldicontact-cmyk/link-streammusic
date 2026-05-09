@@ -2,6 +2,8 @@ export interface DSP {
   name: string;
   logo: string;
   url: string;
+  /** When false, click is not sent to Meta CAPI / pixel. Defaults to true. */
+  tracked?: boolean;
 }
 
 export type EraGenre =
@@ -86,6 +88,12 @@ export const releases: ReleaseConfig[] = [
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/track/superstar/28526078",
+        tracked: false,
       },
     ],
     genrePrimary: "dance",
