@@ -73,7 +73,8 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [release]);
 
-  const handleDspClick = async (dspName: string) => {
+  const handleDspClick = async (dspName: string, tracked: boolean) => {
+    if (!tracked) return;
     const eventId = await trackEvent(
       "ViewContent",
       buildMetadata({
