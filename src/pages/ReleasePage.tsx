@@ -24,7 +24,23 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     genre_secondary: release.genreSecondary,
     label: release.label ?? "ERA Music",
     is_new_release: isNewRelease(release),
+    mood_tags: release.moodTags,
+    track_language: release.trackLanguage,
     ...extra,
+  });
+
+  /** Same shape as buildMetadata, formatted for the Supabase trackDspEvent call. */
+  const buildDspMetadata = (eventId: string) => ({
+    event_id: eventId,
+    release_slug: release.slug,
+    artist_name: release.artist,
+    release_type: release.releaseType,
+    genre_primary: release.genrePrimary,
+    genre_secondary: release.genreSecondary,
+    label: release.label ?? "ERA Music",
+    is_new_release: isNewRelease(release),
+    mood_tags: release.moodTags,
+    track_language: release.trackLanguage,
   });
 
   useEffect(() => {
@@ -60,16 +76,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     // cross-system reconciliation.
     (async () => {
       const eventId = await trackEvent("PageView", buildMetadata());
-      await trackDspEvent("view", undefined, {
-        event_id: eventId,
-        release_slug: release.slug,
-        artist_name: release.artist,
-        release_type: release.releaseType,
-        genre_primary: release.genrePrimary,
-        genre_secondary: release.genreSecondary,
-        label: release.label ?? "ERA Music",
-        is_new_release: isNewRelease(release),
-      });
+      await trackDspEvent("view", undefined, buildDspMetadata(eventId));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [release]);
@@ -82,16 +89,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
         dsp_chosen: dspName,
       }),
     );
-    await trackDspEvent("click", dspName, {
-      event_id: eventId,
-      release_slug: release.slug,
-      artist_name: release.artist,
-      release_type: release.releaseType,
-      genre_primary: release.genrePrimary,
-      genre_secondary: release.genreSecondary,
-      label: release.label ?? "ERA Music",
-      is_new_release: isNewRelease(release),
-    });
+    await trackDspEvent("click", dspName, buildDspMetadata(eventId));
   };
 
   return (

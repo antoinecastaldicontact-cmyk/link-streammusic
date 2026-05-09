@@ -18,6 +18,8 @@ export interface DspEventMetadata {
   genre_secondary?: string;
   label?: string;
   is_new_release?: boolean;
+  mood_tags?: string[];
+  track_language?: string;
   /** Shared with the Meta event for cross-system reconciliation. */
   event_id?: string;
 }
@@ -43,6 +45,8 @@ export async function trackDspEvent(
       genre_secondary: metadata.genre_secondary ?? null,
       label: metadata.label ?? null,
       is_new_release: metadata.is_new_release ?? null,
+      mood_tags: metadata.mood_tags ?? null,
+      track_language: metadata.track_language ?? null,
     });
   } catch (e) {
     console.error("DSP analytics error:", e);

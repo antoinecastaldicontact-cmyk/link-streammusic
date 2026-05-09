@@ -5,16 +5,57 @@ export interface DSP {
 }
 
 /**
- * Curated list of ERA Music genres. Keep this enum tight — the point is
- * stable Meta segmentation and lookalikes per genre, not a free-form tag soup.
+ * Curated list of genres used across ERA Music and the agency catalogue.
+ * The `(string & {})` trick keeps autocomplete on the union literals while
+ * still allowing arbitrary custom genres for one-off agency tracks.
  */
 export type EraGenre =
   | "melodic_techno"
   | "deep_house"
+  | "house"
   | "organic_house"
   | "downtempo"
   | "progressive"
-  | "indie_dance";
+  | "indie_dance"
+  | "afro_house"
+  | "afrobeat"
+  | "slap_house"
+  | "dance"
+  | "pop"
+  | (string & {});
+
+/**
+ * Listening-context tags. Used by Meta as a multi-value `mood_tags` custom
+ * param to enable mood-based lookalikes and segmentation. Multi-select.
+ *
+ * Stay clear of the workout-industrial-complex vocabulary (no "workout",
+ * "grind", "vibes", etc.) — see ERA brand guidelines.
+ */
+export type MoodTag =
+  | "running"
+  | "sport"
+  | "training"
+  | "chill"
+  | "focus"
+  | "late_night"
+  | "sunset"
+  | "drive"
+  | "party"
+  | (string & {});
+
+/**
+ * BCP-47-style language code for the track's lyrics / vocals. Used for
+ * targeting alignment (fr-language ad copy → fr tracks, etc.).
+ */
+export type TrackLanguage =
+  | "fr"
+  | "en"
+  | "es"
+  | "pt"
+  | "de"
+  | "it"
+  | "instrumental"
+  | (string & {});
 
 export interface ReleaseConfig {
   slug: string;
@@ -36,6 +77,10 @@ export interface ReleaseConfig {
    * `is_new_release` (true when within 30 days of today).
    */
   releaseDate?: string;
+  /** Multi-select listening-context tags (running, chill, drive, etc.). */
+  moodTags?: MoodTag[];
+  /** Track lyrics / vocals language. Use "instrumental" if no vocals. */
+  trackLanguage?: TrackLanguage;
 }
 
 const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;

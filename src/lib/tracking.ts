@@ -99,6 +99,10 @@ export interface TrackEventData {
   release_slug?: string;
   dsp_chosen?: string;
   is_new_release?: boolean;
+  /** Multi-value listening-context tags. Meta accepts arrays in custom_data. */
+  mood_tags?: string[];
+  /** Track lyrics / vocals language (BCP-47-style code). */
+  track_language?: string;
   // Free-form extension
   [key: string]: string | string[] | boolean | undefined;
 }

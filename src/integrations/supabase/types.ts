@@ -31,6 +31,8 @@ export type Database = {
           genre_secondary: string | null
           label: string | null
           is_new_release: boolean | null
+          mood_tags: string[] | null
+          track_language: string | null
         }
         Insert: {
           created_at?: string
@@ -48,6 +50,8 @@ export type Database = {
           genre_secondary?: string | null
           label?: string | null
           is_new_release?: boolean | null
+          mood_tags?: string[] | null
+          track_language?: string | null
         }
         Update: {
           created_at?: string
@@ -65,6 +69,8 @@ export type Database = {
           genre_secondary?: string | null
           label?: string | null
           is_new_release?: boolean | null
+          mood_tags?: string[] | null
+          track_language?: string | null
         }
         Relationships: []
       }
