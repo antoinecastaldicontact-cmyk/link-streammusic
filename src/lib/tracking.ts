@@ -1,6 +1,20 @@
 const CAPIG_URL = import.meta.env.VITE_CAPIG_URL ?? "https://capig.stape.at/event";
 const CAPIG_KEY = import.meta.env.VITE_CAPIG_KEY ?? "eyJpIjoiaGNoc3dscXAiLCJoIjoiY2FwaWcuc3RhcGUuYXQiLCJrIjoiYTQ0ZjBjNjU3YTJjNzEyN2RmYmJjN2M4NGM4YTQ1NjA3ODExNTE5NmhjaHN3bHFwIn0=";
 
+/**
+ * V2 — Enriched tracking layer for ERA fan links.
+ *
+ * Goal: raise EMQ above 6.1/10 by sending a deterministic, cross-session
+ * `external_id` plus richer device-level signals (screen, viewport, language).
+ * No PII captured; everything device-derived and hashed.
+ *
+ * Geo enrichment (city / region / zip / country) is handled server-side by
+ * Stape CAPIG via IP. Do not duplicate it here.
+ */
+
+const FINGERPRINT_CACHE_KEY = "era_fp_v2";
+const LEGACY_EID_KEY = "era_eid";
+
 export function getCookie(name: string): string | null {
   const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
   return v ? v[2] : null;
@@ -16,29 +30,123 @@ export function getFbc(): string | null {
   return getCookie("_fbc");
 }
 
-export function getExternalId(): string {
-  let id = localStorage.getItem("era_eid");
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem("era_eid", id);
-  }
-  return id;
+/**
+ * Build a deterministic fingerprint string from stable device signals.
+ * Same device → same string → same hash → same external_id across sessions
+ * and even after the user clears localStorage.
+ */
+function buildFingerprintInput(): string {
+  const nav = navigator;
+  const components = [
+    nav.userAgent,
+    `${screen.width}x${screen.height}x${screen.colorDepth}`,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    nav.language,
+    (nav as Navigator & { platform?: string }).platform ?? "",
+    `${nav.hardwareConcurrency ?? 0}`,
+    `${nav.maxTouchPoints ?? 0}`,
+    `${(nav as Navigator & { deviceMemory?: number }).deviceMemory ?? 0}`,
+  ];
+  return components.join("|");
 }
 
+/**
+ * Hash the fingerprint with SHA-256 → 64-char hex string.
+ * Cached in localStorage for perf; cache is regeneratable so clearing
+ * localStorage does not break cross-session matching (same device = same hash).
+ */
+export async function getStableFingerprint(): Promise<string> {
+  const cached = localStorage.getItem(FINGERPRINT_CACHE_KEY);
+  if (cached) return cached;
+
+  const input = buildFingerprintInput();
+  const buf = new TextEncoder().encode(input);
+  const digest = await crypto.subtle.digest("SHA-256", buf);
+  const hex = Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  localStorage.setItem(FINGERPRINT_CACHE_KEY, hex);
+  // Clean up legacy random UUID if it exists; the new fingerprint replaces it.
+  localStorage.removeItem(LEGACY_EID_KEY);
+  return hex;
+}
+
+/**
+ * Backward-compatible sync accessor used by CapigTest and dsp-analytics.
+ * Returns the cached fingerprint if available, otherwise an empty string.
+ * Always pair this with a prior call to `getStableFingerprint()` (e.g. on app
+ * init) so the cache is warm.
+ */
+export function getExternalId(): string {
+  return localStorage.getItem(FINGERPRINT_CACHE_KEY) ?? "";
+}
+
+/**
+ * Custom data accepted on every Meta event. All fields optional so we don't
+ * pollute payloads when a release hasn't been backfilled with the full set.
+ */
+export interface TrackEventData {
+  content_name?: string;
+  content_category?: string;
+  content_ids?: string[];
+  // Enriched ERA metadata
+  genre_primary?: string;
+  genre_secondary?: string;
+  artist_name?: string;
+  label?: string;
+  release_type?: string;
+  release_slug?: string;
+  dsp_chosen?: string;
+  is_new_release?: boolean;
+  // Free-form extension
+  [key: string]: string | string[] | boolean | undefined;
+}
+
+export interface TrackEventOptions {
+  consent?: boolean;
+  /** Provide an event_id to share between Meta and Supabase logs. */
+  eventId?: string;
+}
+
+/**
+ * Fire a Meta event through both the browser pixel (consent-gated) and
+ * Stape CAPIG server-side (always). Returns the `event_id` so callers can
+ * pair it with a Supabase analytics row for cross-system reconciliation.
+ */
 export async function trackEvent(
   eventName: string,
-  customData: Record<string, string> = {},
-  consent: boolean = true
-) {
-  const eventId = crypto.randomUUID();
-  const enrichedData = { ...customData, content_type: "music" };
+  customData: TrackEventData = {},
+  options: TrackEventOptions | boolean = {},
+): Promise<string> {
+  // Backward compat: previous signature was (eventName, data, consent: boolean).
+  const opts: TrackEventOptions =
+    typeof options === "boolean" ? { consent: options } : options;
+  const consent = opts.consent ?? true;
+  const eventId = opts.eventId ?? crypto.randomUUID();
 
-  // Browser pixel — consent-gated
-  if (consent && typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", eventName, enrichedData, { eventID: eventId });
+  // Strip undefined / null / empty values — Meta rejects them in custom_data.
+  const enrichedData: Record<string, string | string[] | boolean> = {
+    content_type: "music",
+  };
+  for (const [k, v] of Object.entries(customData)) {
+    if (v !== undefined && v !== null && v !== "") {
+      enrichedData[k] = v;
+    }
   }
 
-  // CAPIG server-side — ALWAYS fires
+  // Browser pixel — consent-gated
+  if (consent && typeof window !== "undefined" && (window as { fbq?: unknown }).fbq) {
+    (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
+      "track",
+      eventName,
+      enrichedData,
+      { eventID: eventId },
+    );
+  }
+
+  // Server-side via Stape CAPIG — fires regardless of pixel state
+  const fingerprint = await getStableFingerprint();
   const event = {
     event_name: eventName,
     event_id: eventId,
@@ -47,8 +155,17 @@ export async function trackEvent(
     action_source: "website",
     user_data: {
       client_user_agent: navigator.userAgent,
-      ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
-      external_id: getExternalId(),
+      ...(consent
+        ? {
+            fbp: getCookie("_fbp"),
+            fbc: getFbc(),
+          }
+        : {}),
+      external_id: fingerprint,
+      // Device-level signals to lift EMQ
+      language: navigator.language,
+      screen_resolution: `${screen.width}x${screen.height}`,
+      viewport_size: `${window.innerWidth}x${window.innerHeight}`,
     },
     custom_data: enrichedData,
   };
@@ -65,4 +182,6 @@ export async function trackEvent(
   } catch (e) {
     console.error("CAPIG error:", e);
   }
+
+  return eventId;
 }
