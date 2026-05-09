@@ -4,21 +4,67 @@ export interface DSP {
   url: string;
 }
 
+export type EraGenre =
+  | "melodic_techno"
+  | "deep_house"
+  | "house"
+  | "organic_house"
+  | "downtempo"
+  | "progressive"
+  | "indie_dance"
+  | "afro_house"
+  | "afrobeat"
+  | "slap_house"
+  | "dance"
+  | "pop"
+  | (string & {});
+
+export type MoodTag =
+  | "running"
+  | "sport"
+  | "training"
+  | "chill"
+  | "focus"
+  | "late_night"
+  | "sunset"
+  | "drive"
+  | "party"
+  | (string & {});
+
+export type TrackLanguage =
+  | "fr"
+  | "en"
+  | "es"
+  | "pt"
+  | "de"
+  | "it"
+  | "instrumental"
+  | (string & {});
+
 export interface ReleaseConfig {
   slug: string;
   artist: string;
   title: string;
-  releaseType: "Single" | "EP" | "Album";
+  releaseType: "Single" | "EP" | "Album" | "Compilation";
   artworkUrl: string;
   ogTitle: string;
   ogDescription: string;
   dsps: DSP[];
-  genrePrimary?: string;
-  genreSecondary?: string;
+  genrePrimary?: EraGenre;
+  genreSecondary?: EraGenre;
   label?: string;
   releaseDate?: string;
-  moodTags?: string[];
-  trackLanguage?: string;
+  moodTags?: MoodTag[];
+  trackLanguage?: TrackLanguage;
+}
+
+const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
+
+export function isNewRelease(release: ReleaseConfig): boolean | undefined {
+  if (!release.releaseDate) return undefined;
+  const released = new Date(release.releaseDate).getTime();
+  if (Number.isNaN(released)) return undefined;
+  return Date.now() - released < NEW_RELEASE_WINDOW_MS;
 }
 
 export const releases: ReleaseConfig[] = [
