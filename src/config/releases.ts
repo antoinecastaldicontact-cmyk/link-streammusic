@@ -42,6 +42,12 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
       },
     ],
+    genrePrimary: "dance",
+    genreSecondary: "afro_house",
+    label: "Autre",
+    releaseDate: "2026-05-08",
+    moodTags: ["party", "drive"],
+    trackLanguage: "en",
   },
   {
     slug: "elliott-on-s-oubliera",
