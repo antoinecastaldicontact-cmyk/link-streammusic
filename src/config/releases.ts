@@ -54,7 +54,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/on-soubliera/1889891026?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=elliott-on-s-oubliera&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/on-soubliera/1889891026?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=elliott-on-s-oubliera&utm_content=apple_music",
       },
     ],
   },
@@ -75,7 +75,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/if-you-want-it/1892503333?i=1892503347&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=alac-if-you-want-it&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/if-you-want-it/1892503333?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=alac-if-you-want-it&utm_content=apple_music",
       },
     ],
   },
@@ -96,7 +96,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/you-know/1891987304?i=6761902083&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jey-vazz-you-know&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/you-know/1891987304?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jey-vazz-you-know&utm_content=apple_music",
       },
     ],
   },
@@ -117,7 +117,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/bandit-chef/1887943995?i=1887944238&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sensey-bandit-chef&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/bandit-chef/1887943995?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sensey-bandit-chef&utm_content=apple_music",
       },
       {
         name: "Deezer",
@@ -143,7 +143,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/shattered-dreams-edit/1769530938?i=1769531282&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=dreamstruck-shattered-dreams&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/shattered-dreams-edit/1769530938?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=dreamstruck-shattered-dreams&utm_content=apple_music",
       },
     ],
   },
@@ -164,7 +164,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/youre-a-spaceman/1880366149?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tara-mcdonald-spaceman&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/youre-a-spaceman/1880366149?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tara-mcdonald-spaceman&utm_content=apple_music",
       },
     ],
   },
@@ -185,7 +185,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/41-single/1855633254",
+        url: "https://geo.music.apple.com/album/41-single/1855633254",
       },
     ],
   },
@@ -206,7 +206,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/girlfriend/1886220508?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-girlfriend&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/girlfriend/1886220508?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-girlfriend&utm_content=apple_music",
       },
     ],
   },
