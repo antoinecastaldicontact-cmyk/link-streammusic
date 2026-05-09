@@ -4,15 +4,52 @@ export interface DSP {
   url: string;
 }
 
+/**
+ * Curated list of ERA Music genres. Keep this enum tight — the point is
+ * stable Meta segmentation and lookalikes per genre, not a free-form tag soup.
+ */
+export type EraGenre =
+  | "melodic_techno"
+  | "deep_house"
+  | "organic_house"
+  | "downtempo"
+  | "progressive"
+  | "indie_dance";
+
 export interface ReleaseConfig {
   slug: string;
   artist: string;
   title: string;
-  releaseType: "Single" | "EP" | "Album";
+  releaseType: "Single" | "EP" | "Album" | "Compilation";
   artworkUrl: string;
   ogTitle: string;
   ogDescription: string;
   dsps: DSP[];
+  /** Primary genre — sent to Meta as `genre_primary` for segmentation. */
+  genrePrimary?: EraGenre;
+  /** Optional secondary genre for cross-genre tracks. */
+  genreSecondary?: EraGenre;
+  /** Optional label override; defaults to "ERA Music" when omitted. */
+  label?: string;
+  /**
+   * ISO date (YYYY-MM-DD) of the official release. Used to compute
+   * `is_new_release` (true when within 30 days of today).
+   */
+  releaseDate?: string;
+}
+
+const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
+
+/**
+ * Returns true if the release dropped within the last 30 days.
+ * Returns undefined if no releaseDate is set, so we don't send a misleading
+ * `false` to Meta for releases that simply haven't been backfilled.
+ */
+export function isNewRelease(release: ReleaseConfig): boolean | undefined {
+  if (!release.releaseDate) return undefined;
+  const released = new Date(release.releaseDate).getTime();
+  if (Number.isNaN(released)) return undefined;
+  return Date.now() - released < NEW_RELEASE_WINDOW_MS;
 }
 
 export const releases: ReleaseConfig[] = [
