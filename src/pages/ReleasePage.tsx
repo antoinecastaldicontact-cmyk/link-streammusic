@@ -131,7 +131,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
               href={dsp.url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => handleDspClick(dsp.name)}
+              onClick={() => handleDspClick(dsp.name, dsp.tracked !== false)}
               className="group flex items-center justify-between gap-3 rounded-md border border-foreground/10 bg-foreground/[0.03] px-4 py-3 transition-all hover:bg-foreground/[0.08] hover:border-foreground/30 active:scale-[0.99]"
             >
               <div className="flex items-center gap-3 min-w-0">
