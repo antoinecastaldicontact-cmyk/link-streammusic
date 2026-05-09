@@ -13,12 +13,12 @@ export interface ReleaseConfig {
   ogTitle: string;
   ogDescription: string;
   dsps: DSP[];
-  genrePrimary: string;
+  genrePrimary?: string;
   genreSecondary?: string;
-  label: string;
-  releaseDate: string;
-  moodTags: string[];
-  trackLanguage: string;
+  label?: string;
+  releaseDate?: string;
+  moodTags?: string[];
+  trackLanguage?: string;
 }
 
 export const releases: ReleaseConfig[] = [
