@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { ReleaseConfig } from "@/config/releases";
-import { trackEvent } from "@/lib/tracking";
+import { ReleaseConfig, isNewRelease } from "@/config/releases";
+import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
 
 interface ReleasePageProps {
@@ -9,6 +9,23 @@ interface ReleasePageProps {
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
   const hasSentPageView = useRef(false);
+
+  /**
+   * Build the enriched metadata bag once per render. Fields that aren't set
+   * on the release (e.g. unbackfilled genrePrimary) flow through as undefined
+   * and are stripped by trackEvent before the payload hits Meta.
+   */
+  const buildMetadata = (extra: Partial<TrackEventData> = {}): TrackEventData => ({
+    content_name: release.title,
+    artist_name: release.artist,
+    release_type: release.releaseType,
+    release_slug: release.slug,
+    genre_primary: release.genrePrimary,
+    genre_secondary: release.genreSecondary,
+    label: release.label ?? "ERA Music",
+    is_new_release: isNewRelease(release),
+    ...extra,
+  });
 
   useEffect(() => {
     if (hasSentPageView.current) return;
@@ -39,20 +56,42 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     }
     descEl.setAttribute("content", release.ogDescription);
 
-    trackEvent("PageView", { content_name: release.title, content_category: release.artist }, true);
-    trackDspEvent("view");
+    // Fire PageView in Meta + Supabase with a shared event_id for
+    // cross-system reconciliation.
+    (async () => {
+      const eventId = await trackEvent("PageView", buildMetadata());
+      await trackDspEvent("view", undefined, {
+        event_id: eventId,
+        release_slug: release.slug,
+        artist_name: release.artist,
+        release_type: release.releaseType,
+        genre_primary: release.genrePrimary,
+        genre_secondary: release.genreSecondary,
+        label: release.label ?? "ERA Music",
+        is_new_release: isNewRelease(release),
+      });
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [release]);
 
-  const handleDspClick = (dspName: string) => {
-    trackEvent(
+  const handleDspClick = async (dspName: string) => {
+    const eventId = await trackEvent(
       "ViewContent",
-      {
-        content_name: release.title,
+      buildMetadata({
         content_category: dspName,
-      },
-      true
+        dsp_chosen: dspName,
+      }),
     );
-    trackDspEvent("click", dspName);
+    await trackDspEvent("click", dspName, {
+      event_id: eventId,
+      release_slug: release.slug,
+      artist_name: release.artist,
+      release_type: release.releaseType,
+      genre_primary: release.genrePrimary,
+      genre_secondary: release.genreSecondary,
+      label: release.label ?? "ERA Music",
+      is_new_release: isNewRelease(release),
+    });
   };
 
   return (
