@@ -33,7 +33,7 @@ export const releases: ReleaseConfig[] = [
       {
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
-        url: "https://music.apple.com/fr/album/superstar/1893973515?i=1893973522&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
+        url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
       },
     ],
   },
