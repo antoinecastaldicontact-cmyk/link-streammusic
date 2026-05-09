@@ -16,30 +16,60 @@ export type Database = {
     Tables: {
       dsp_events: {
         Row: {
+          artist_name: string | null
           created_at: string
           dsp_name: string | null
+          event_id: string | null
           event_type: string
           external_id: string | null
+          genre_primary: string | null
+          genre_secondary: string | null
           id: string
+          is_new_release: boolean | null
+          label: string | null
+          mood_tags: string[] | null
           page_path: string
+          release_slug: string | null
+          release_type: string | null
+          track_language: string | null
           user_agent: string | null
         }
         Insert: {
+          artist_name?: string | null
           created_at?: string
           dsp_name?: string | null
+          event_id?: string | null
           event_type: string
           external_id?: string | null
+          genre_primary?: string | null
+          genre_secondary?: string | null
           id?: string
+          is_new_release?: boolean | null
+          label?: string | null
+          mood_tags?: string[] | null
           page_path: string
+          release_slug?: string | null
+          release_type?: string | null
+          track_language?: string | null
           user_agent?: string | null
         }
         Update: {
+          artist_name?: string | null
           created_at?: string
           dsp_name?: string | null
+          event_id?: string | null
           event_type?: string
           external_id?: string | null
+          genre_primary?: string | null
+          genre_secondary?: string | null
           id?: string
+          is_new_release?: boolean | null
+          label?: string | null
+          mood_tags?: string[] | null
           page_path?: string
+          release_slug?: string | null
+          release_type?: string | null
+          track_language?: string | null
           user_agent?: string | null
         }
         Relationships: []
