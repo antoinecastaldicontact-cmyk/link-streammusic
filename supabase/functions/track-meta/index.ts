@@ -23,8 +23,8 @@ serve(async (req) => {
 
   try {
     const pixelId = Deno.env.get("META_PIXEL_ID");
-    const accessToken = Deno.env.get("META_CAPI_TOKEN");
-    const testEventCode = Deno.env.get("META_TEST_EVENT_CODE");
+    const accessToken = Deno.env.get("META_CAPIG_TOKEN");
+    const testEventCode = Deno.env.get("META_TEST_EVENTCODE");
 
     if (!pixelId || !accessToken) {
       return new Response(
