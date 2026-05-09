@@ -13,6 +13,12 @@ export interface ReleaseConfig {
   ogTitle: string;
   ogDescription: string;
   dsps: DSP[];
+  genrePrimary?: string;
+  genreSecondary?: string;
+  label?: string;
+  releaseDate?: string;
+  moodTags?: string[];
+  trackLanguage?: string;
 }
 
 export const releases: ReleaseConfig[] = [
@@ -36,6 +42,12 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
       },
     ],
+    genrePrimary: "dance",
+    genreSecondary: "afro_house",
+    label: "Autre",
+    releaseDate: "2026-05-08",
+    moodTags: ["party", "drive"],
+    trackLanguage: "en",
   },
   {
     slug: "elliott-on-s-oubliera",
@@ -57,6 +69,12 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/on-soubliera/1889891026?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=elliott-on-s-oubliera&utm_content=apple_music",
       },
     ],
+    genrePrimary: "pop",
+    genreSecondary: "hit",
+    label: "Autre",
+    releaseDate: "2026-05-09",
+    moodTags: ["chill", "late_night"],
+    trackLanguage: "fr",
   },
   {
     slug: "alac-if-you-want-it",
@@ -78,6 +96,11 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/if-you-want-it/1892503333?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=alac-if-you-want-it&utm_content=apple_music",
       },
     ],
+    genrePrimary: "melodic_techno",
+    label: "ERA Music",
+    releaseDate: "2026-05-09",
+    moodTags: ["running", "focus"],
+    trackLanguage: "en",
   },
   {
     slug: "jey-vazz-you-know",
@@ -99,6 +122,12 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/you-know/1891987304?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jey-vazz-you-know&utm_content=apple_music",
       },
     ],
+    genrePrimary: "deep_house",
+    genreSecondary: "house",
+    label: "ERA Music",
+    releaseDate: "2026-05-09",
+    moodTags: ["running", "focus"],
+    trackLanguage: "en",
   },
   {
     slug: "sensey-bandit-chef",
@@ -167,6 +196,12 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/youre-a-spaceman/1880366149?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tara-mcdonald-spaceman&utm_content=apple_music",
       },
     ],
+    genrePrimary: "dance",
+    genreSecondary: "slap_house",
+    label: "ERA Music",
+    releaseDate: "2026-05-09",
+    moodTags: ["running", "sport"],
+    trackLanguage: "en",
   },
   {
     slug: "smush-41",
@@ -209,5 +244,11 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/girlfriend/1886220508?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-girlfriend&utm_content=apple_music",
       },
     ],
+    genrePrimary: "afrobeat",
+    genreSecondary: "rnb",
+    label: "Autre",
+    releaseDate: "2026-05-09",
+    moodTags: ["party", "sunset"],
+    trackLanguage: "fr",
   },
 ];
