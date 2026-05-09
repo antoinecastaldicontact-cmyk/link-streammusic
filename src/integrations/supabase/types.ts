@@ -23,6 +23,14 @@ export type Database = {
           id: string
           page_path: string
           user_agent: string | null
+          event_id: string | null
+          release_slug: string | null
+          artist_name: string | null
+          release_type: string | null
+          genre_primary: string | null
+          genre_secondary: string | null
+          label: string | null
+          is_new_release: boolean | null
         }
         Insert: {
           created_at?: string
@@ -32,6 +40,14 @@ export type Database = {
           id?: string
           page_path: string
           user_agent?: string | null
+          event_id?: string | null
+          release_slug?: string | null
+          artist_name?: string | null
+          release_type?: string | null
+          genre_primary?: string | null
+          genre_secondary?: string | null
+          label?: string | null
+          is_new_release?: boolean | null
         }
         Update: {
           created_at?: string
@@ -41,6 +57,14 @@ export type Database = {
           id?: string
           page_path?: string
           user_agent?: string | null
+          event_id?: string | null
+          release_slug?: string | null
+          artist_name?: string | null
+          release_type?: string | null
+          genre_primary?: string | null
+          genre_secondary?: string | null
+          label?: string | null
+          is_new_release?: boolean | null
         }
         Relationships: []
       }
