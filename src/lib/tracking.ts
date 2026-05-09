@@ -1,5 +1,5 @@
-const CAPIG_URL = import.meta.env.VITE_CAPIG_URL ?? "https://capig.stape.at/event";
-const CAPIG_KEY = import.meta.env.VITE_CAPIG_KEY ?? "eyJpIjoiaGNoc3dscXAiLCJoIjoiY2FwaWcuc3RhcGUuYXQiLCJrIjoiYTQ0ZjBjNjU3YTJjNzEyN2RmYmJjN2M4NGM4YTQ1NjA3ODExNTE5NmhjaHN3bHFwIn0=";
+const FUNCTIONS_URL = import.meta.env.VITE_SUPABASE_URL + "/functions/v1/track-meta";
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const FINGERPRINT_CACHE_KEY = "era_fp_v2";
 const LEGACY_EID_KEY = "era_eid";
@@ -95,6 +95,7 @@ export async function trackEvent(
     }
   }
 
+  // Browser pixel — consent-gated, kept for real-time attribution
   if (consent && typeof window !== "undefined" && (window as { fbq?: unknown }).fbq) {
     (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
       "track",
@@ -104,35 +105,34 @@ export async function trackEvent(
     );
   }
 
+  // Server-side via Supabase Edge Function → Meta CAPI direct
   const fingerprint = await getStableFingerprint();
-  const event = {
+
+  const payload = {
     event_name: eventName,
     event_id: eventId,
     event_time: Math.floor(Date.now() / 1000),
     event_source_url: window.location.href,
-    action_source: "website",
     user_data: {
       client_user_agent: navigator.userAgent,
-      ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
       external_id: fingerprint,
-      language: navigator.language,
-      screen_resolution: `${screen.width}x${screen.height}`,
-      viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+      ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
     },
     custom_data: enrichedData,
   };
 
   try {
-    await fetch(CAPIG_URL, {
+    await fetch(FUNCTIONS_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "capig-api-key": CAPIG_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "apikey": SUPABASE_ANON_KEY,
       },
-      body: JSON.stringify({ data: [event] }),
+      body: JSON.stringify(payload),
     });
   } catch (e) {
-    console.error("CAPIG error:", e);
+    console.error("Edge Function tracking error:", e);
   }
 
   return eventId;
