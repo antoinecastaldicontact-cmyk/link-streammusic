@@ -53,7 +53,7 @@ serve(async (req) => {
 
       try {
         const geoRes = await fetch(
-          `http://ip-api.com/json/${clientIp}?fields=city,regionCode,zip,countryCode&lang=en`,
+          `https://ip-api.com/json/${clientIp}?fields=city,regionCode,zip,countryCode&lang=en`,
           { signal: AbortSignal.timeout(1500) },
         );
         if (geoRes.ok) {
