@@ -37,9 +37,14 @@ serve(async (req) => {
     const { event_name, event_id, event_time, event_source_url, user_data, custom_data } = body;
 
     const clientIp =
+      req.headers.get("cf-connecting-ip") ||
       req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
       req.headers.get("x-real-ip") ||
+      req.headers.get("x-client-ip") ||
       null;
+
+    console.log("[track-meta] Captured client IP:", clientIp,
+      "| IPv6:", clientIp?.includes(":") ?? false);
 
     const enrichedUserData: Record<string, unknown> = { ...user_data };
 
@@ -48,7 +53,7 @@ serve(async (req) => {
 
       try {
         const geoRes = await fetch(
-          `http://ip-api.com/json/${clientIp}?fields=city,regionCode,zip,countryCode&lang=en`,
+          `https://ip-api.com/json/${clientIp}?fields=city,regionCode,zip,countryCode&lang=en`,
           { signal: AbortSignal.timeout(1500) },
         );
         if (geoRes.ok) {
