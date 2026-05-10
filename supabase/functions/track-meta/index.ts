@@ -46,6 +46,10 @@ serve(async (req) => {
     console.log("[track-meta] Captured client IP:", clientIp,
       "| IPv6:", clientIp?.includes(":") ?? false);
 
+    console.log("[track-meta] All headers:", JSON.stringify(
+      Object.fromEntries(req.headers.entries())
+    ));
+
     const enrichedUserData: Record<string, unknown> = { ...user_data };
 
     if (clientIp) {
