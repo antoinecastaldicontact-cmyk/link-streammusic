@@ -40,15 +40,10 @@ serve(async (req) => {
       req.headers.get("cf-connecting-ip") ||
       req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
       req.headers.get("x-real-ip") ||
-      req.headers.get("x-client-ip") ||
       null;
 
     console.log("[track-meta] Captured client IP:", clientIp,
       "| IPv6:", clientIp?.includes(":") ?? false);
-
-    console.log("[track-meta] All headers:", JSON.stringify(
-      Object.fromEntries(req.headers.entries())
-    ));
 
     const enrichedUserData: Record<string, unknown> = { ...user_data };
 
