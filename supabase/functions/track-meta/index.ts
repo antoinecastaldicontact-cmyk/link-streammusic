@@ -16,6 +16,42 @@ async function sha256hex(value: string): Promise<string> {
     .join("");
 }
 
+// Geo cache: maps IP → { result, expiresAt }
+// Persists for the lifetime of the Edge Function instance (typically
+// 15 min before Deno recycles it). Reduces ip-api calls by 5-10x.
+const GEO_CACHE = new Map<string, { result: Record<string, string>; expiresAt: number }>();
+
+const GEO_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+
+async function getGeoForIp(ip: string): Promise<Record<string, string>> {
+  const now = Date.now();
+
+  const cached = GEO_CACHE.get(ip);
+  if (cached && cached.expiresAt > now) {
+    return cached.result;
+  }
+
+  try {
+    const geoRes = await fetch(
+      `https://ip-api.com/json/${ip}?fields=city,regionCode,zip,countryCode&lang=en`,
+      { signal: AbortSignal.timeout(1500) },
+    );
+    if (!geoRes.ok) return {};
+
+    const geo = await geoRes.json();
+    const result: Record<string, string> = {};
+    if (geo.city) result.ct = await sha256hex(geo.city);
+    if (geo.regionCode) result.st = await sha256hex(geo.regionCode);
+    if (geo.zip) result.zp = await sha256hex(geo.zip);
+    if (geo.countryCode) result.country = await sha256hex(geo.countryCode);
+
+    GEO_CACHE.set(ip, { result, expiresAt: now + GEO_CACHE_TTL_MS });
+    return result;
+  } catch {
+    return {};
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -49,22 +85,8 @@ serve(async (req) => {
 
     if (clientIp) {
       enrichedUserData.client_ip_address = clientIp;
-
-      try {
-        const geoRes = await fetch(
-          `https://ip-api.com/json/${clientIp}?fields=city,regionCode,zip,countryCode&lang=en`,
-          { signal: AbortSignal.timeout(1500) },
-        );
-        if (geoRes.ok) {
-          const geo = await geoRes.json();
-          if (geo.city) enrichedUserData.ct = await sha256hex(geo.city);
-          if (geo.regionCode) enrichedUserData.st = await sha256hex(geo.regionCode);
-          if (geo.zip) enrichedUserData.zp = await sha256hex(geo.zip);
-          if (geo.countryCode) enrichedUserData.country = await sha256hex(geo.countryCode);
-        }
-      } catch {
-        // Geo best-effort — never block event on geo API error
-      }
+      const geo = await getGeoForIp(clientIp);
+      Object.assign(enrichedUserData, geo);
     }
 
     const metaPayload: Record<string, unknown> = {
