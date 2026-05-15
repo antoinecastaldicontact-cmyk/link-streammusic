@@ -74,6 +74,57 @@ export type Database = {
         }
         Relationships: []
       }
+      email_subscribers: {
+        Row: {
+          artist_name: string | null
+          beehiiv_subscriber_id: string | null
+          beehiiv_synced: boolean | null
+          country: string | null
+          created_at: string | null
+          email: string
+          genre_primary: string | null
+          hashed_email: string
+          id: string
+          in_app_browser: string | null
+          mood_tags: string[] | null
+          release_slug: string | null
+          source_url: string | null
+          track_language: string | null
+        }
+        Insert: {
+          artist_name?: string | null
+          beehiiv_subscriber_id?: string | null
+          beehiiv_synced?: boolean | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          genre_primary?: string | null
+          hashed_email: string
+          id?: string
+          in_app_browser?: string | null
+          mood_tags?: string[] | null
+          release_slug?: string | null
+          source_url?: string | null
+          track_language?: string | null
+        }
+        Update: {
+          artist_name?: string | null
+          beehiiv_subscriber_id?: string | null
+          beehiiv_synced?: boolean | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          genre_primary?: string | null
+          hashed_email?: string
+          id?: string
+          in_app_browser?: string | null
+          mood_tags?: string[] | null
+          release_slug?: string | null
+          source_url?: string | null
+          track_language?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
