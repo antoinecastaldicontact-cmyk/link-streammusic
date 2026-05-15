@@ -53,7 +53,6 @@ export interface ReleaseConfig {
   ogDescription: string;
   dsps: DSP[];
   genrePrimary?: EraGenre;
-  genreSecondary?: EraGenre;
   label?: string;
   releaseDate?: string;
   moodTags?: MoodTag[];
