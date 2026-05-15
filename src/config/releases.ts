@@ -53,7 +53,6 @@ export interface ReleaseConfig {
   ogDescription: string;
   dsps: DSP[];
   genrePrimary?: EraGenre;
-  genreSecondary?: EraGenre;
   label?: string;
   releaseDate?: string;
   moodTags?: MoodTag[];
@@ -97,7 +96,6 @@ export const releases: ReleaseConfig[] = [
       },
     ],
     genrePrimary: "dance",
-    genreSecondary: "afro_house",
     label: "Autre",
     releaseDate: "2026-05-08",
     moodTags: ["party", "drive"],
@@ -124,7 +122,6 @@ export const releases: ReleaseConfig[] = [
       },
     ],
     genrePrimary: "pop",
-    genreSecondary: "hit",
     label: "Autre",
     releaseDate: "2026-05-09",
     moodTags: ["chill", "late_night"],
@@ -177,7 +174,6 @@ export const releases: ReleaseConfig[] = [
       },
     ],
     genrePrimary: "deep_house",
-    genreSecondary: "house",
     label: "ERA Music",
     releaseDate: "2026-05-09",
     moodTags: ["running", "focus"],
@@ -251,7 +247,6 @@ export const releases: ReleaseConfig[] = [
       },
     ],
     genrePrimary: "dance",
-    genreSecondary: "slap_house",
     label: "ERA Music",
     releaseDate: "2026-05-09",
     moodTags: ["running", "sport"],
@@ -299,7 +294,6 @@ export const releases: ReleaseConfig[] = [
       },
     ],
     genrePrimary: "afrobeat",
-    genreSecondary: "rnb",
     label: "Autre",
     releaseDate: "2026-05-09",
     moodTags: ["party", "sunset"],

@@ -6,7 +6,6 @@ export interface DspEventMetadata {
   artist_name?: string;
   release_type?: string;
   genre_primary?: string;
-  genre_secondary?: string;
   label?: string;
   is_new_release?: boolean;
   mood_tags?: string[];
@@ -31,7 +30,6 @@ export async function trackDspEvent(
       artist_name: metadata.artist_name ?? null,
       release_type: metadata.release_type ?? null,
       genre_primary: metadata.genre_primary ?? null,
-      genre_secondary: metadata.genre_secondary ?? null,
       label: metadata.label ?? null,
       is_new_release: metadata.is_new_release ?? null,
       mood_tags: metadata.mood_tags ?? null,

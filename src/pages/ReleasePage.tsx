@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { ReleaseConfig, isNewRelease } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 interface ReleasePageProps {
   release: ReleaseConfig;
@@ -14,9 +15,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     content_name: release.title,
     artist_name: release.artist,
     release_type: release.releaseType,
-    release_slug: release.slug,
     genre_primary: release.genrePrimary,
-    genre_secondary: release.genreSecondary,
     label: release.label ?? "ERA Music",
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
@@ -30,7 +29,6 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     artist_name: release.artist,
     release_type: release.releaseType,
     genre_primary: release.genrePrimary,
-    genre_secondary: release.genreSecondary,
     label: release.label ?? "ERA Music",
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
@@ -155,6 +153,8 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
             </a>
           ))}
         </div>
+
+        <NewsletterSignup release={release} />
       </div>
     </div>
   );
