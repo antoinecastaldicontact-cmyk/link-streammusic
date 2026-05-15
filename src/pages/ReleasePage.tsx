@@ -153,6 +153,8 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
             </a>
           ))}
         </div>
+
+        <NewsletterSignup release={release} />
       </div>
     </div>
   );
