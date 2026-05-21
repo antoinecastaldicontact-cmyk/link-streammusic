@@ -70,6 +70,27 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "odyssey-oh-la-mer",
+    artist: "Odyssey",
+    title: "Oh La Mer",
+    releaseType: "Single",
+    artworkUrl: "/artworks/olm.webp",
+    ogTitle: "Odyssey - Oh La Mer",
+    ogDescription: "Listen to Oh La Mer by Odyssey, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/5se5BnFIsMf0CVTno42pq0?si=4308aae2e9c34c2c&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=odyssey-oh-la-mer&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/oh-la-mer/1895919957?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=odyssey-oh-la-mer&utm_content=apple_music",
+      },
+    ],
+  },
+  {
     slug: "sasson-jamy-nox-superstar",
     artist: "Sasson, Jamy Nox",
     title: "Superstar",
