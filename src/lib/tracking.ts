@@ -55,9 +55,53 @@ export function getExternalId(): string {
 }
 
 /**
- * Detect in-app browser (webview) used by social apps. Critical for ERA —
- * clicks from Instagram/TikTok ads land in their in-app browser, which does
- * NOT share cookies with the user's installed Spotify/Apple Music app.
+ * Detect device type from user agent and touch capability.
+ * Returns: "mobile" | "tablet" | "desktop"
+ */
+export function getDeviceType(): "mobile" | "tablet" | "desktop" {
+  const ua = navigator.userAgent;
+  if (/iPad|Android(?!.*Mobile)|Tablet/i.test(ua)) return "tablet";
+  if (/Mobi|iPhone|iPod|Android.*Mobile|Windows Phone/i.test(ua)) return "mobile";
+  return "desktop";
+}
+
+/**
+ * Detect OS from user agent.
+ * Returns: "iOS" | "Android" | "macOS" | "Windows" | "Linux" | "Other"
+ */
+export function getOS(): string {
+  const ua = navigator.userAgent;
+  if (/iPhone|iPad|iPod/.test(ua)) return "iOS";
+  if (/Android/.test(ua)) return "Android";
+  if (/Mac OS X|Macintosh/.test(ua)) return "macOS";
+  if (/Windows/.test(ua)) return "Windows";
+  if (/Linux/.test(ua)) return "Linux";
+  return "Other";
+}
+
+/**
+ * Detect browser from user agent. In-app browsers (Instagram, TikTok, etc.)
+ * are detected separately by getInAppBrowser() — this returns the underlying
+ * engine (Chrome, Safari, etc.).
+ * Returns: "Chrome" | "Safari" | "Firefox" | "Edge" | "Opera" | "Other"
+ */
+export function getBrowser(): string {
+  const ua = navigator.userAgent;
+  // Order matters: Edge before Chrome, Chrome before Safari (Edge/Chrome
+  // include Safari token, Chrome includes Safari token).
+  if (/Edg\//.test(ua)) return "Edge";
+  if (/OPR\/|Opera/.test(ua)) return "Opera";
+  if (/Firefox/.test(ua)) return "Firefox";
+  if (/Chrome/.test(ua)) return "Chrome";
+  if (/Safari/.test(ua)) return "Safari";
+  return "Other";
+}
+
+/**
+ * Detect in-app browser (webview) used by social apps. This is critical for
+ * ERA — clicks from Instagram/TikTok ads land in their in-app browser, which
+ * does NOT share cookies with the user's installed Spotify/Apple Music app.
+ * Conversion friction is much higher in these contexts.
  *
  * Returns the app name when detected, otherwise null.
  */
@@ -78,12 +122,19 @@ export interface TrackEventData {
   content_category?: string;
   content_ids?: string[];
   genre_primary?: string;
+  genre_secondary?: string;
   artist_name?: string;
   label?: string;
   release_type?: string;
+  release_slug?: string;
+  dsp_chosen?: string;
   is_new_release?: boolean;
   mood_tags?: string[];
   track_language?: string;
+  // Device enrichment
+  device_type?: string;
+  os?: string;
+  browser?: string;
   in_app_browser?: string;
   [key: string]: string | string[] | boolean | undefined;
 }
@@ -103,9 +154,14 @@ export async function trackEvent(
   const consent = opts.consent ?? true;
   const eventId = opts.eventId ?? crypto.randomUUID();
 
+  // Auto-enrich with device data on every event. Caller-supplied values in
+  // customData take precedence (rare but allowed).
   const inAppBrowser = getInAppBrowser();
   const enrichedData: Record<string, string | string[] | boolean> = {
     content_type: "music",
+    device_type: getDeviceType(),
+    os: getOS(),
+    browser: getBrowser(),
     ...(inAppBrowser ? { in_app_browser: inAppBrowser } : {}),
   };
   for (const [k, v] of Object.entries(customData)) {
@@ -135,6 +191,7 @@ export async function trackEvent(
     user_data: {
       client_user_agent: navigator.userAgent,
       external_id: fingerprint,
+      // Device-level signals to lift EMQ
       screen_resolution: `${screen.width}x${screen.height}`,
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
