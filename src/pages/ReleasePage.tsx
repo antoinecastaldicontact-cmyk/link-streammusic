@@ -119,6 +119,16 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
           <p className="text-[10px] uppercase tracking-[2px] text-foreground/40 mt-1">
             {release.releaseType}
           </p>
+          {release.shopUrl && (
+            <a
+              href={release.shopUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center mt-2.5 text-[10px] uppercase tracking-[2.5px] font-bold text-background bg-foreground px-4 py-1.5 rounded-sm hover:opacity-80 transition-opacity"
+            >
+              Shop Now
+            </a>
+          )}
         </div>
 
         {/* DSP buttons — hero, full-width filled CTAs */}
