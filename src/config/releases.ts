@@ -57,6 +57,7 @@ export interface ReleaseConfig {
   releaseDate?: string;
   moodTags?: MoodTag[];
   trackLanguage?: TrackLanguage;
+  shopUrl?: string;
 }
 
 const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
@@ -94,6 +95,7 @@ export const releases: ReleaseConfig[] = [
     releaseDate: "2026-05-15",
     moodTags: ["party", "popular"],
     trackLanguage: "fr",
+    shopUrl: "https://joya-univers.com",
   },
   {
     slug: "odyssey-oh-la-mer",
