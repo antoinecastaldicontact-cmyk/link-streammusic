@@ -70,6 +70,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "tayc-rnboi-maman-prie",
+    artist: "Tayc, RnBoi",
+    title: "Maman Prie",
+    releaseType: "Single",
+    artworkUrl: "/artworks/tayc-rnboi-maman-prie.webp",
+    ogTitle: "Tayc, RnBoi - Maman Prie",
+    ogDescription: "Listen to Maman Prie by Tayc, RnBoi, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/6oojgcW5Ffo7GkB54vARCh?si=e693719429864a45&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-rnboi-maman-prie&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/maman-prie/1893043530?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-rnboi-maman-prie&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "afrobeat",
+    label: "Playtwo",
+    releaseDate: "2026-05-15",
+    moodTags: ["party", "popular"],
+    trackLanguage: "fr",
+  },
+  {
     slug: "odyssey-oh-la-mer",
     artist: "Odyssey",
     title: "Oh La Mer",
