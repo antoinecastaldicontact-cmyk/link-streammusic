@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anonymous users can read dsp_events" ON public.dsp_events;
