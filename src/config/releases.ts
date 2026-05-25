@@ -71,6 +71,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "tayc-f-k-my-ex",
+    artist: "Tayc",
+    title: "F**k My Ex",
+    releaseType: "Single",
+    artworkUrl: "/artworks/tayc-f-k-my-ex.webp",
+    ogTitle: "Tayc - F**k My Ex",
+    ogDescription: "Listen to F**k My Ex by Tayc, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2P3zdt0B3iKZiPrwmDXSGB?si=31ff68525b97419a&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-f-k-my-ex&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/fuck-my-ex/1893043530?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=tayc-f-k-my-ex&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "afrobeat",
+    label: "PlayTwo",
+    releaseDate: "2026-05-22",
+    moodTags: ["party", "popular"],
+    trackLanguage: "fr",
+  },
+  {
     slug: "tayc-rnboi-maman-prie",
     artist: "Tayc, RnBoi",
     title: "Maman Prie",
