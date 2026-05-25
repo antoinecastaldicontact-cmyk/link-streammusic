@@ -95,6 +95,7 @@ export const releases: ReleaseConfig[] = [
     releaseDate: "2026-05-22",
     moodTags: ["party", "popular"],
     trackLanguage: "fr",
+    shopUrl: "https://joya-univers.com",
   },
   {
     slug: "tayc-rnboi-maman-prie",
