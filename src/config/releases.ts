@@ -71,6 +71,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "ryu-junior-rodeo",
+    artist: "Ryu Junior",
+    title: "Rodeo",
+    releaseType: "Single",
+    artworkUrl: "/artworks/RODEO2.jpg",
+    ogTitle: "Ryu Junior - Rodeo",
+    ogDescription: "Listen to Rodeo by Ryu Junior, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/4hEYkH9bBbSEHNrts1iz3a?si=b40d3b8b3aed40a7&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=ryu-junior-rodeo&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/rodeo/6771036194?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=ryu-junior-rodeo&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "afrobeat",
+    label: "ERA Music",
+    releaseDate: "2026-05-28",
+    moodTags: ["popular", "party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "tayc-f-k-my-ex",
     artist: "Tayc",
     title: "F**k My Ex",
