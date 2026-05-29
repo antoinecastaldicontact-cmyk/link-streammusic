@@ -71,6 +71,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "jon-norris-the-flame",
+    artist: "Jon Norris",
+    title: "The Flame",
+    releaseType: "Single",
+    artworkUrl: "/artworks/715C2DE4-BFE2-42AE-8E12-53AB18D4DFF4.jpg",
+    ogTitle: "Jon Norris - The Flame",
+    ogDescription: "Listen to The Flame by Jon Norris, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/0ln8D8qRJu5iwALKOEjLYH?si=082c35716c484f3d&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jon-norris-the-flame&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/the-flame/6767533373?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jon-norris-the-flame&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "pop",
+    label: "ERA Music",
+    releaseDate: "2026-05-28",
+    moodTags: ["chill", "wedding"],
+    trackLanguage: "en",
+  },
+  {
     slug: "ryu-junior-rodeo",
     artist: "Ryu Junior",
     title: "Rodeo",
