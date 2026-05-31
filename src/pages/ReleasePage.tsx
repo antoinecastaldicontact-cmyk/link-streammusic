@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { ReleaseConfig, isNewRelease } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
+import { useVisitorCountry, filterDspsByCountry } from "@/lib/visitor-country";
 
 
 interface ReleasePageProps {
@@ -10,6 +11,8 @@ interface ReleasePageProps {
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
   const hasSentPageView = useRef(false);
+  const visitorCountry = useVisitorCountry();
+  const visibleDsps = filterDspsByCountry(release.dsps, visitorCountry);
 
   const buildMetadata = (extra: Partial<TrackEventData> = {}): TrackEventData => ({
     content_name: release.title,
@@ -20,6 +23,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
+    visitor_country: visitorCountry ?? undefined,
     ...extra,
   });
 
@@ -33,6 +37,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
+    visitor_country: visitorCountry ?? undefined,
   });
 
   useEffect(() => {
@@ -133,7 +138,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
 
         {/* DSP buttons — hero, full-width filled CTAs */}
         <div className="flex flex-col gap-2 px-4 pb-8">
-          {release.dsps.map((dsp) => (
+          {visibleDsps.map((dsp) => (
             <a
               key={dsp.name}
               href={dsp.url}
