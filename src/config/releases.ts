@@ -23,6 +23,29 @@ export const EUROPE_COUNTRIES = [
 
 export const NORTH_AMERICA_COUNTRIES = ["US", "CA"] as const;
 
+/**
+ * Rest of World = all countries NOT in Europe and NOT in North America.
+ * Used by YouTube (visible only in RoW, never tracked).
+ * Explicit allowlist for predictable filtering (no negative match).
+ */
+export const REST_OF_WORLD_COUNTRIES = [
+  // Latin America
+  "BR", "MX", "AR", "CL", "CO", "PE", "VE", "UY", "EC", "BO", "PY",
+  "CR", "PA", "DO", "GT", "HN", "SV", "NI", "CU", "PR",
+  // Asia-Pacific
+  "JP", "KR", "CN", "TW", "HK", "SG", "TH", "VN", "ID", "PH", "MY",
+  "IN", "PK", "BD", "LK", "NP", "AU", "NZ",
+  // Middle East & North Africa
+  "AE", "SA", "QA", "KW", "BH", "OM", "JO", "LB", "EG", "MA", "DZ",
+  "TN", "IL", "TR", "IR", "IQ",
+  // Sub-Saharan Africa
+  "ZA", "NG", "KE", "GH", "SN", "CI", "CM", "ET", "TZ", "UG", "ZW",
+  "AO", "MZ", "RW",
+  // Eastern Europe non-EU, Caucasus, Central Asia
+  "RU", "UA", "BY", "MD", "RS", "ME", "MK", "AL", "BA", "XK", "GE",
+  "AM", "AZ", "MN", "KZ", "UZ", "KG", "TJ", "TM",
+] as const;
+
 export type EraGenre =
   | "melodic_techno"
   | "deep_house"
