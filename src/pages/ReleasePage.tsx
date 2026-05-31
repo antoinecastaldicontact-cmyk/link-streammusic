@@ -138,7 +138,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
 
         {/* DSP buttons — hero, full-width filled CTAs */}
         <div className="flex flex-col gap-2 px-4 pb-8">
-          {release.dsps.map((dsp) => (
+          {visibleDsps.map((dsp) => (
             <a
               key={dsp.name}
               href={dsp.url}
