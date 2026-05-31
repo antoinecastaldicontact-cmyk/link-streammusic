@@ -295,6 +295,25 @@ export const releases: ReleaseConfig[] = [
         url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
       },
       {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/tracks/B0GXGCXS4Q",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/3965170861",
+        countries: ["FR"],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=yWuT12y0FjM",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
+      {
         name: "Beatport",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
         url: "https://www.beatport.com/fr/track/superstar/28526078",
