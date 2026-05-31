@@ -131,6 +131,7 @@ export interface TrackEventData {
   is_new_release?: boolean;
   mood_tags?: string[];
   track_language?: string;
+  visitor_country?: string;
   // Device enrichment
   device_type?: string;
   os?: string;
