@@ -4,7 +4,24 @@ export interface DSP {
   url: string;
   /** When false, click is not sent to Meta CAPI / pixel. Defaults to true. */
   tracked?: boolean;
+  /** If set, DSP appears only for visitors from these countries (ISO-2). */
+  countries?: string[];
+  /** If set, DSP is hidden from visitors of these countries (ISO-2). */
+  excludeCountries?: string[];
 }
+
+/**
+ * European countries (France included). Used by region-restricted DSPs
+ * to define exclusion zones (e.g. Amazon Music hidden in Europe) or
+ * inclusion zones (e.g. YouTube shown only in Rest of World).
+ */
+export const EUROPE_COUNTRIES = [
+  "FR", "DE", "ES", "IT", "NL", "BE", "GB", "IE", "PT", "AT", "CH",
+  "SE", "NO", "DK", "FI", "PL", "CZ", "GR", "HU", "RO", "BG", "HR",
+  "SK", "SI", "LT", "LV", "EE", "LU", "MT", "CY", "IS",
+] as const;
+
+export const NORTH_AMERICA_COUNTRIES = ["US", "CA"] as const;
 
 export type EraGenre =
   | "melodic_techno"
