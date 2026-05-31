@@ -11,6 +11,8 @@ interface ReleasePageProps {
 
 const ReleasePage = ({ release }: ReleasePageProps) => {
   const hasSentPageView = useRef(false);
+  const visitorCountry = useVisitorCountry();
+  const visibleDsps = filterDspsByCountry(release.dsps, visitorCountry);
 
   const buildMetadata = (extra: Partial<TrackEventData> = {}): TrackEventData => ({
     content_name: release.title,
@@ -21,6 +23,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
+    visitor_country: visitorCountry ?? undefined,
     ...extra,
   });
 
@@ -34,6 +37,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
+    visitor_country: visitorCountry ?? undefined,
   });
 
   useEffect(() => {
