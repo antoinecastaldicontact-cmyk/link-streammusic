@@ -23,6 +23,29 @@ export const EUROPE_COUNTRIES = [
 
 export const NORTH_AMERICA_COUNTRIES = ["US", "CA"] as const;
 
+/**
+ * Rest of World = all countries NOT in Europe and NOT in North America.
+ * Used by YouTube (visible only in RoW, never tracked).
+ * Explicit allowlist for predictable filtering (no negative match).
+ */
+export const REST_OF_WORLD_COUNTRIES = [
+  // Latin America
+  "BR", "MX", "AR", "CL", "CO", "PE", "VE", "UY", "EC", "BO", "PY",
+  "CR", "PA", "DO", "GT", "HN", "SV", "NI", "CU", "PR",
+  // Asia-Pacific
+  "JP", "KR", "CN", "TW", "HK", "SG", "TH", "VN", "ID", "PH", "MY",
+  "IN", "PK", "BD", "LK", "NP", "AU", "NZ",
+  // Middle East & North Africa
+  "AE", "SA", "QA", "KW", "BH", "OM", "JO", "LB", "EG", "MA", "DZ",
+  "TN", "IL", "TR", "IR", "IQ",
+  // Sub-Saharan Africa
+  "ZA", "NG", "KE", "GH", "SN", "CI", "CM", "ET", "TZ", "UG", "ZW",
+  "AO", "MZ", "RW",
+  // Eastern Europe non-EU, Caucasus, Central Asia
+  "RU", "UA", "BY", "MD", "RS", "ME", "MK", "AL", "BA", "XK", "GE",
+  "AM", "AZ", "MN", "KZ", "UZ", "KG", "TJ", "TM",
+] as const;
+
 export type EraGenre =
   | "melodic_techno"
   | "deep_house"
@@ -132,6 +155,25 @@ export const releases: ReleaseConfig[] = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/rodeo/6771036194?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=ryu-junior-rodeo&utm_content=apple_music",
       },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/albums/B0H11JZS7L",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/4009477871",
+        countries: ["FR"],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=SJbC2i2MiBc",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
     ],
     genrePrimary: "afrobeat",
     label: "ERA Music",
@@ -212,6 +254,25 @@ export const releases: ReleaseConfig[] = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/oh-la-mer/1895919957?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=odyssey-oh-la-mer&utm_content=apple_music",
       },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/tracks/B0GZ3SZH1S",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/3994392731",
+        countries: ["FR"],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=FV4ZC_JrgYI",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
     ],
   },
   {
@@ -232,6 +293,25 @@ export const releases: ReleaseConfig[] = [
         name: "Apple Music",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/superstar/1893973515?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=sasson-jamy-nox-superstar&utm_content=apple_music",
+      },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/tracks/B0GXGCXS4Q",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/3965170861",
+        countries: ["FR"],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=yWuT12y0FjM",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
       },
       {
         name: "Beatport",
