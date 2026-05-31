@@ -254,6 +254,25 @@ export const releases: ReleaseConfig[] = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/oh-la-mer/1895919957?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=odyssey-oh-la-mer&utm_content=apple_music",
       },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/tracks/B0GZ3SZH1S",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/3994392731",
+        countries: ["FR"],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=FV4ZC_JrgYI",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
     ],
   },
   {
