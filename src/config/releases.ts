@@ -115,7 +115,7 @@ export const releases: ReleaseConfig[] = [
     artist: "Raeya Chen",
     title: "Moons & Stars 星月",
     releaseType: "Single",
-    artworkUrl: "/artworks/raeya-chen-moons-stars.webp",
+    artworkUrl: "/artworks/raeya-chen-moons-stars.jpg",
     ogTitle: "Raeya Chen - Moons & Stars 星月",
     ogDescription: "Listen to Moons & Stars 星月 by Raeya Chen, out now on all platforms.",
     dsps: [
