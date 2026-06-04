@@ -111,6 +111,40 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "raeya-chen-moons-stars",
+    artist: "Raeya Chen",
+    title: "Moons & Stars 星月",
+    releaseType: "Single",
+    artworkUrl: "/artworks/raeya-chen-moons-stars.webp",
+    ogTitle: "Raeya Chen - Moons & Stars 星月",
+    ogDescription: "Listen to Moons & Stars 星月 by Raeya Chen, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/3runNiueacreQU5KfxWXIL?si=6bedc5f10cfe4f4b&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=spotify",
+        },
+        {
+          name: "Deezer",
+          logo: "/icons/deezer.webp",
+          url: "https://www.deezer.com/track/4007707021?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=deezer",
+          countries: ["FR"],
+        },
+        {
+          name: "YouTube",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+          url: "https://www.youtube.com/watch?v=kNaVm93QcVs&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=youtube",
+          countries: [...REST_OF_WORLD_COUNTRIES],
+          tracked: false,
+        }
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-06-05",
+    moodTags: ["sport", "chinese"],
+    trackLanguage: "en",
+  },
+  {
     slug: "jon-norris-the-flame",
     artist: "Jon Norris",
     title: "The Flame",
