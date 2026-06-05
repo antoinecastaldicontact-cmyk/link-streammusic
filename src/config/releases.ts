@@ -111,6 +111,39 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "nicky-doll-in-your-head-ft-vendom-remix",
+    artist: "Nicky Doll",
+    title: "In Your Head (feat. Vendom Remix)",
+    releaseType: "Single",
+    artworkUrl: "/artworks/nicky-doll-in-your-head-ft-vendom-remix.jpg",
+    ogTitle: "Nicky Doll - In Your Head (feat. Vendom Remix)",
+    ogDescription: "Listen to In Your Head (feat. Vendom Remix) by Nicky Doll, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2iIWY96NSs5Q4WfxYAf4rQ?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-vendom-remix&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/in-your-head-la-di-da-da-vendom-remix/6771034328?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-vendom-remix&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://link.deezer.com/s/33t0Jc9YcEPP3NEFe14AE?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-vendom-remix&utm_content=deezer",
+        countries: ["FR"],
+        tracked: false,
+      },
+    ],
+    genrePrimary: "dance",
+    label: "External",
+    releaseDate: "2026-06-05",
+    moodTags: ["party", "running"],
+    trackLanguage: "en",
+  },
+  {
     slug: "nicky-doll-in-your-head-ft-daniel-distinkt-remix",
     artist: "Nicky Doll",
     title: "In Your Head (feat. Daniel Distinkt Remix)",
