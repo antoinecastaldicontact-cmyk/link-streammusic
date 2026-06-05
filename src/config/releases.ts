@@ -111,6 +111,39 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "nicky-doll-in-your-head-ft-luv-fondation-uk-ruff-loardez-remix",
+    artist: "Nicky Doll",
+    title: "In Your Head (feat. Luv Fondation UK, Ruff Loardez Remix)",
+    releaseType: "Single",
+    artworkUrl: "/artworks/nicky-doll-in-your-head.jpg",
+    ogTitle: "Nicky Doll - In Your Head (feat. Luv Fondation UK, Ruff Loardez Remix)",
+    ogDescription: "Listen to In Your Head (feat. Luv Fondation UK, Ruff Loardez Remix) by Nicky Doll, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2YCiJ76gfzVR6KYHQI8MIK?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-luv-fondation-uk-ruff-loardez-remix&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/in-your-head-la-di-da-da-luv-foundation-uk-x-ruff-loaderz-remix/6771034328?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-luv-fondation-uk-ruff-loardez-remix&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://link.deezer.com/s/33t0Ri2TloK1S4sRgmanw?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head-ft-luv-fondation-uk-ruff-loardez-remix&utm_content=deezer",
+        countries: ["FR"],
+        tracked: false,
+      },
+    ],
+    genrePrimary: "dance",
+    label: "External",
+    releaseDate: "2026-06-05",
+    moodTags: ["party", "running"],
+    trackLanguage: "en",
+  },
+  {
     slug: "nicky-doll-in-your-head-ft-vendom-remix",
     artist: "Nicky Doll",
     title: "In Your Head (feat. Vendom Remix)",
