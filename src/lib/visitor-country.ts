@@ -11,7 +11,9 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  */
 export function useVisitorCountry(): string | null {
   const [country, setCountry] = useState<string | null>(() => {
-    return sessionStorage.getItem(SESSION_KEY);
+    const stored = sessionStorage.getItem(SESSION_KEY);
+    // Treat "XX" as unresolved — force a fresh fetch on every page load.
+    return stored && stored !== "XX" ? stored : null;
   });
 
   useEffect(() => {
@@ -28,11 +30,14 @@ export function useVisitorCountry(): string | null {
       .then((r) => r.json())
       .then((data) => {
         const c = data.country || "XX";
-        sessionStorage.setItem(SESSION_KEY, c);
+        // Only cache successful resolutions. Don't persist "XX" so
+        // a transient ip-api.com failure doesn't lock the visitor out.
+        if (c !== "XX") {
+          sessionStorage.setItem(SESSION_KEY, c);
+        }
         setCountry(c);
       })
       .catch(() => {
-        sessionStorage.setItem(SESSION_KEY, "XX");
         setCountry("XX");
       });
   }, [country]);
