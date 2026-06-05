@@ -111,6 +111,38 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "jaidyn-hurst-every-wrong-right",
+    artist: "Jaidyn Hurst",
+    title: "Every Wrong Right",
+    releaseType: "Single",
+    artworkUrl: "/artworks/jaidyn-hurst-every-wrong-right.webp",
+    ogTitle: "Jaidyn Hurst - Every Wrong Right",
+    ogDescription: "Listen to Every Wrong Right by Jaidyn Hurst, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/5CeAlxayFUAM3Oov7TBLxW?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jaidyn-hurst-every-wrong-right&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/every-wrong-right/1896380483?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jaidyn-hurst-every-wrong-right&utm_content=apple_music",
+        },
+        {
+          name: "Amazon Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+          url: "https://music.amazon.fr/albums/B0GZTRHWWS?marketplaceId=A13V1IB3VIYZZH&musicTerritory=FR&ref=dm_sh_USI6FbSeScFRCXiwExR69OgmC&trackAsin=B0GZTQH4W6&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jaidyn-hurst-every-wrong-right&utm_content=amazon_music",
+          excludeCountries: [...EUROPE_COUNTRIES],
+        },
+    ],
+    genrePrimary: "pop",
+    label: "External",
+    releaseDate: "2026-06-05",
+    moodTags: ["chill", "acoustic"],
+    trackLanguage: "en",
+  },
+  {
     slug: "raeya-chen-moons-stars",
     artist: "Raeya Chen",
     title: "Moons & Stars 星月",
