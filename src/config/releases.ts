@@ -111,6 +111,38 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "nicky-doll-in-your-head",
+    artist: "Nicky Doll",
+    title: "In Your Head",
+    releaseType: "Single",
+    artworkUrl: "/artworks/nicky-doll-in-your-head.jpg",
+    ogTitle: "Nicky Doll - In Your Head",
+    ogDescription: "Listen to In Your Head by Nicky Doll, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/6hNCCCELgZzldNHCZs4ptk?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/in-your-head-la-di-da-da/6771034328?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://link.deezer.com/s/33t0uFf5FiuWJnB1QuUo2?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=nicky-doll-in-your-head&utm_content=deezer",
+        countries: ["FR"],
+      },
+    ],
+    genrePrimary: "dance",
+    label: "External",
+    releaseDate: "2026-06-05",
+    moodTags: ["party", "running"],
+    trackLanguage: "en",
+  },
+  {
     slug: "jaidyn-hurst-every-wrong-right",
     artist: "Jaidyn Hurst",
     title: "Every Wrong Right",
