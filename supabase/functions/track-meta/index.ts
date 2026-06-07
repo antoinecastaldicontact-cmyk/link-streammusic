@@ -111,11 +111,13 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+    const ALLOWED_HOST_SUFFIXES = [".lovable.app", ".lovableproject.com"];
     try {
       const u = new URL(event_source_url);
-      if (!ALLOWED_HOSTS.has(u.hostname) && !u.hostname.endsWith(".lovable.app")) {
-        throw new Error("host not allowed");
-      }
+      const okHost =
+        ALLOWED_HOSTS.has(u.hostname) ||
+        ALLOWED_HOST_SUFFIXES.some((s) => u.hostname.endsWith(s));
+      if (!okHost) throw new Error("host not allowed");
     } catch {
       return new Response(
         JSON.stringify({ error: "Invalid event_source_url" }),
