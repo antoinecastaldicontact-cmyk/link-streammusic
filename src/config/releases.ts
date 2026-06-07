@@ -320,6 +320,11 @@ export const releases: ReleaseConfig[] = [
           url: "https://open.spotify.com/intl-fr/track/3runNiueacreQU5KfxWXIL?si=6bedc5f10cfe4f4b&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=spotify",
         },
         {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/moons-stars-%E6%98%9F%E6%9C%88-single/6775851035?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=apple_music",
+        },
+        {
           name: "Deezer",
           logo: "/icons/deezer.webp",
           url: "https://www.deezer.com/track/4007707021?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=raeya-chen-moons-stars&utm_content=deezer",
