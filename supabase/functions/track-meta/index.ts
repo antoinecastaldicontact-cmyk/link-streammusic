@@ -72,6 +72,69 @@ serve(async (req) => {
     const body = await req.json();
     const { event_name, event_id, event_time, event_source_url, user_data, custom_data } = body;
 
+    // Input validation — prevent CAPI injection / attribution pollution
+    const ALLOWED_EVENTS = new Set([
+      "PageView",
+      "ViewContent",
+      "Lead",
+      "Search",
+      "AddToCart",
+      "InitiateCheckout",
+    ]);
+    const ALLOWED_HOSTS = new Set([
+      "link.eramusic.fr",
+      "fanlinkhub.com",
+      "www.fanlinkhub.com",
+      "link-streammusic.lovable.app",
+    ]);
+
+    if (typeof event_name !== "string" || !ALLOWED_EVENTS.has(event_name)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid event_name" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (typeof event_id !== "string" || event_id.length < 8 || event_id.length > 128) {
+      return new Response(
+        JSON.stringify({ error: "Invalid event_id" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    const nowSec = Math.floor(Date.now() / 1000);
+    if (
+      typeof event_time !== "number" ||
+      !Number.isFinite(event_time) ||
+      Math.abs(nowSec - event_time) > 300
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Invalid event_time" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    try {
+      const u = new URL(event_source_url);
+      if (!ALLOWED_HOSTS.has(u.hostname) && !u.hostname.endsWith(".lovable.app")) {
+        throw new Error("host not allowed");
+      }
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Invalid event_source_url" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (user_data && typeof user_data !== "object") {
+      return new Response(
+        JSON.stringify({ error: "Invalid user_data" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (custom_data && typeof custom_data !== "object") {
+      return new Response(
+        JSON.stringify({ error: "Invalid custom_data" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
     const clientIp =
       req.headers.get("cf-connecting-ip") ||
       req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
