@@ -111,6 +111,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "mooglie-mont-rouge-your-body",
+    artist: "Mooglie, Mont Rouge",
+    title: "Your Body",
+    releaseType: "Single",
+    artworkUrl: "/artworks/B1 YOUR BODY.jpg",
+    ogTitle: "Mooglie, Mont Rouge - Your Body",
+    ogDescription: "Listen to Your Body by Mooglie, Mont Rouge, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2T0JzlCoiAahbFkhTwWWCY?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=mooglie-mont-rouge-your-body&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/your-body-2026-version/6773370073?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=mooglie-mont-rouge-your-body&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "afro_house",
+    label: "Ultra",
+    releaseDate: "2026-06-05",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "nicky-doll-in-your-head-ft-anton-power-remix",
     artist: "Nicky Doll",
     title: "In Your Head (feat. Anton Power Remix)",
