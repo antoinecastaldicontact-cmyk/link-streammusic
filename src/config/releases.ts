@@ -115,7 +115,7 @@ export const releases: ReleaseConfig[] = [
     artist: "Mooglie, Mont Rouge",
     title: "Your Body",
     releaseType: "Single",
-    artworkUrl: "/artworks/B1 YOUR BODY.jpg",
+    artworkUrl: "/artworks/mooglie-mont-rouge-your-body.jpg",
     ogTitle: "Mooglie, Mont Rouge - Your Body",
     ogDescription: "Listen to Your Body by Mooglie, Mont Rouge, out now on all platforms.",
     dsps: [
