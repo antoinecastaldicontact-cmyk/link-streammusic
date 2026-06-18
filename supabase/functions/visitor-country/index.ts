@@ -14,30 +14,71 @@ function extractClientIp(req: Request): string | null {
   return req.headers.get("x-real-ip") || req.headers.get("cf-connecting-ip");
 }
 
+function normalizeIso2(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const code = value.trim().toUpperCase();
+  if (code.length !== 2 || code === "XX" || !/^[A-Z]{2}$/.test(code)) return null;
+  return code;
+}
+
+async function resolveCountryFromIp(ip: string): Promise<string | null> {
+  const token = Deno.env.get("IPINFO_TOKEN");
+
+  // Provider A: ipinfo.io (HTTPS, supports IPv4/IPv6, returns plain ISO-2 text).
+  if (token) {
+    try {
+      const res = await fetch(
+        `https://ipinfo.io/${ip}/country?token=${token}`,
+        { signal: AbortSignal.timeout(2000) },
+      );
+      if (res.ok) {
+        const text = await res.text();
+        const code = normalizeIso2(text);
+        if (code) return code;
+      } else {
+        await res.body?.cancel();
+      }
+    } catch {
+      // fall through to keyless provider
+    }
+  }
+
+  // Provider B: ipwho.is (HTTPS, keyless, supports IPv4/IPv6).
+  try {
+    const res = await fetch(
+      `https://ipwho.is/${ip}`,
+      { signal: AbortSignal.timeout(2000) },
+    );
+    if (res.ok) {
+      const data = await res.json();
+      const code =
+        normalizeIso2(data?.country_code) ||
+        normalizeIso2(data?.countryCode) ||
+        normalizeIso2(data?.country);
+      if (code) return code;
+    } else {
+      await res.body?.cancel();
+    }
+  } catch {
+    // give up
+  }
+
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Try cf-ipcountry first (works on Cloudflare-fronted infra, free if present).
-  let country = req.headers.get("cf-ipcountry");
+  // 1) Try cf-ipcountry first (free when populated by Cloudflare-fronted infra).
+  let country = normalizeIso2(req.headers.get("cf-ipcountry"));
 
-  // Fallback: resolve via ip-api.com from the client IP.
-  if (!country || country === "XX") {
+  // 2/3) Fallback: resolve via HTTPS provider from the client IP.
+  if (!country) {
     const ip = extractClientIp(req);
     if (ip) {
-      try {
-        const res = await fetch(
-          `https://ip-api.com/json/${ip}?fields=countryCode`,
-          { signal: AbortSignal.timeout(1500) },
-        );
-        if (res.ok) {
-          const data = await res.json();
-          if (data.countryCode) country = data.countryCode;
-        }
-      } catch {
-        // Network failure or timeout — fall through to XX.
-      }
+      country = await resolveCountryFromIp(ip);
     }
   }
 
