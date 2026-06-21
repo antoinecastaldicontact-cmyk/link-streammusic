@@ -111,6 +111,45 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "coco-breezy-tonight",
+    artist: "Coco & Breezy",
+    title: "Tonight",
+    releaseType: "Single",
+    artworkUrl: "/artworks/coco-breezy-tonight.webp",
+    ogTitle: "Coco & Breezy - Tonight",
+    ogDescription: "Listen to Tonight by Coco & Breezy, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/4PjL6RLTiycYZItjJH53qb?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=coco-breezy-tonight&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/tonight/6771260579?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=coco-breezy-tonight&utm_content=apple_music",
+      },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.fr/albums/B0H2D4XJBX?marketplaceId=A13V1IB3VIYZZH&musicTerritory=FR&ref=dm_sh_wAgfGLBfMPIcsfvH156STrrNo&trackAsin=B0H2D5BVR8&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=coco-breezy-tonight&utm_content=amazon_music",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=Q4nWFl06Slc&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=coco-breezy-tonight&utm_content=youtube",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
+    ],
+    genrePrimary: "deep_house",
+    label: "/",
+    releaseDate: "2026-06-19",
+    moodTags: ["sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "mooglie-mont-rouge-your-body",
     artist: "Mooglie, Mont Rouge",
     title: "Your Body",
