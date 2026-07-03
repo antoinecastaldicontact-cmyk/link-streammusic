@@ -111,6 +111,45 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "the-good-son-wake-up",
+    artist: "The Good Son",
+    title: "Wake Up",
+    releaseType: "Single",
+    artworkUrl: "/artworks/the-good-son-wake-up.jpg",
+    ogTitle: "The Good Son - Wake Up",
+    ogDescription: "Listen to Wake Up by The Good Son, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/2EjAA8OvZj9lMcLyaOafak?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=the-good-son-wake-up&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/wake-up/6777042940?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=the-good-son-wake-up&utm_content=apple_music",
+        },
+        {
+          name: "Amazon Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+          url: "https://music.amazon.fr/tracks/B0H46BR87GJJvtdW90NrAn1toCQUrE?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=the-good-son-wake-up&utm_content=amazon_music",
+          excludeCountries: [...EUROPE_COUNTRIES],
+        },
+        {
+          name: "YouTube",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+          url: "https://www.youtube.com/watch?v=4_zRPESXHmk&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=the-good-son-wake-up&utm_content=youtube",
+          countries: [...REST_OF_WORLD_COUNTRIES],
+          tracked: false,
+        }
+    ],
+    genrePrimary: "indie_dance",
+    label: "ERA Music",
+    releaseDate: "2026-07-03",
+    moodTags: ["running", "sport", "training", "party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "coco-breezy-tonight",
     artist: "Coco & Breezy",
     title: "Tonight",
