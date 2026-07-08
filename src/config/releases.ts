@@ -130,6 +130,11 @@ export const releases: ReleaseConfig[] = [
           url: "https://geo.music.apple.com/album/waves-of-luv/6780914450?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=matt-sassari-mont-rouge-wav-of-luv&utm_content=apple_music",
         },
         {
+          name: "Beatport",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+          url: "https://www.beatport.com/release/waves-of-luv-extended-mix/7079271?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=matt-sassari-mont-rouge-wav-of-luv&utm_content=beatport",
+        },
+        {
           name: "Amazon Music",
           logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
           url: "https://music.amazon.fr/tracks/B0H5KSK3MF?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=matt-sassari-mont-rouge-wav-of-luv&utm_content=amazon_music",
