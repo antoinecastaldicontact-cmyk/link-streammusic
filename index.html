@@ -23,6 +23,11 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
+      // Disable Meta pixel auto-config: it fires DOM-inferred events
+      // (e.g. SubscribedButtonClick, ViewContent) WITHOUT an eventID,
+      // which breaks browser/server deduplication against our CAPI events.
+      // All events we care about are fired explicitly from src/lib/tracking.ts.
+      fbq('set', 'autoConfig', false, '1272936565032247');
       fbq('init', '1272936565032247');
     </script>
     <meta property="og:title" content="ERA Music">
