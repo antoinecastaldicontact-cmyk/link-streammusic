@@ -111,6 +111,51 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "jamy-nox-otra-vez",
+    artist: "Jamy Nox",
+    title: "Otra Vez",
+    releaseType: "Single",
+    artworkUrl: "/artworks/jamy-nox-otra-vez.webp",
+    ogTitle: "Jamy Nox - Otra Vez",
+    ogDescription: "Listen to Otra Vez by Jamy Nox, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/1vm9FqNTk1C6Az2SAtxq1b?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jamy-nox-otra-vez&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/otra-vez-feat-luc%C3%ADa-haze/6783829260?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jamy-nox-otra-vez&utm_content=apple_music",
+      },
+      {
+        name: "Amazon Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+        url: "https://music.amazon.com/albums/B0H6G3L1TB?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jamy-nox-otra-vez&utm_content=amazon_music",
+        excludeCountries: [...EUROPE_COUNTRIES],
+      },
+      {
+        name: "YouTube",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+        url: "https://www.youtube.com/watch?v=a-b8ZKyMspw&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jamy-nox-otra-vez&utm_content=youtube",
+        countries: [...REST_OF_WORLD_COUNTRIES],
+        tracked: false,
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/release/otra-vez-extended-mix/7121002?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jamy-nox-otra-vez&utm_content=beatport",
+        tracked: false,
+      },
+    ],
+    genrePrimary: "afro_house",
+    label: "CR2 Records",
+    releaseDate: "2026-07-10",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "matt-sassari-mont-rouge-wav-of-luv",
     artist: "Matt Sassari, Mont Rouge",
     title: "Wav Of Luv",
