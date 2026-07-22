@@ -111,6 +111,45 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "bald-whitecap-k3yn0t3-i-could-be-the-one",
+    artist: "BALD, Whitecap, k3yn0t3",
+    title: "I Could Be The One",
+    releaseType: "Single",
+    artworkUrl: "/artworks/bald-whitecap-k3yn0t3-i-could-be-the-one.webp",
+    ogTitle: "BALD, Whitecap, k3yn0t3 - I Could Be The One",
+    ogDescription: "Listen to I Could Be The One by BALD, Whitecap, k3yn0t3, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/2BvcTshh1coECzuPb5fB0s?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=bald-whitecap-k3yn0t3-i-could-be-the-one&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/i-could-be-the-one-single/6783740162?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=bald-whitecap-k3yn0t3-i-could-be-the-one&utm_content=apple_music",
+        },
+        {
+          name: "Amazon Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+          url: "https://music.amazon.fr/albums/B0H6JT4GFY?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=bald-whitecap-k3yn0t3-i-could-be-the-one&utm_content=amazon_music",
+          excludeCountries: [...EUROPE_COUNTRIES],
+        },
+        {
+          name: "YouTube",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+          url: "https://www.youtube.com/watch?v=vluPVfNVG_A&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=bald-whitecap-k3yn0t3-i-could-be-the-one&utm_content=youtube",
+          countries: [...REST_OF_WORLD_COUNTRIES],
+          tracked: false,
+        }
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-07-17",
+    moodTags: ["running", "sport"],
+    trackLanguage: "en",
+  },
+  {
     slug: "jamy-nox-otra-vez",
     artist: "Jamy Nox",
     title: "Otra Vez",
