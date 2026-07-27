@@ -111,6 +111,51 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "yofunders-nube-feel-better",
+    artist: "Yofunders, NUBE",
+    title: "Feel Better",
+    releaseType: "Single",
+    artworkUrl: "/artworks/yofunders-nube-feel-better.webp",
+    ogTitle: "Yofunders, NUBE - Feel Better",
+    ogDescription: "Listen to Feel Better by Yofunders, NUBE, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/4ZgeTZyZG8fCQDMasz4PRw?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=yofunders-nube-feel-better&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/feel-better-under-the-sun/6787946634?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=yofunders-nube-feel-better&utm_content=apple_music",
+        },
+        {
+          name: "Deezer",
+          logo: "/icons/deezer.webp",
+          url: "https://www.deezer.com/track/4135494331?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=yofunders-nube-feel-better&utm_content=deezer",
+          countries: ["FR"],
+        },
+        {
+          name: "Amazon Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/amazonmusic.svg",
+          url: "https://music.amazon.com/tracks/B0H7S8BYK2?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=yofunders-nube-feel-better&utm_content=amazon_music",
+          excludeCountries: [...EUROPE_COUNTRIES],
+        },
+        {
+          name: "YouTube",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/youtube.svg",
+          url: "https://www.youtube.com/watch?v=NvPSFyX4lGI&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=yofunders-nube-feel-better&utm_content=youtube",
+          countries: [...REST_OF_WORLD_COUNTRIES],
+          tracked: false,
+        }
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-07-24",
+    moodTags: ["party", "running", "sport", "sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "bald-whitecap-k3yn0t3-i-could-be-the-one",
     artist: "BALD, Whitecap, k3yn0t3",
     title: "I Could Be The One",
