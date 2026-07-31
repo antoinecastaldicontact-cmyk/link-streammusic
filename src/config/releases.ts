@@ -112,6 +112,7 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 export const releases: ReleaseConfig[] = [
   {
     slug: "yofunders-nube-feel-better",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Yofunders, NUBE",
     title: "Feel Better",
     releaseType: "Single",
@@ -157,6 +158,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "bald-whitecap-k3yn0t3-i-could-be-the-one",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "BALD, Whitecap, k3yn0t3",
     title: "I Could Be The One",
     releaseType: "Single",
@@ -196,6 +198,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "jamy-nox-otra-vez",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Jamy Nox",
     title: "Otra Vez",
     releaseType: "Single",
@@ -241,6 +244,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "matt-sassari-mont-rouge-wav-of-luv",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Matt Sassari, Mont Rouge",
     title: "Wav Of Luv",
     releaseType: "Single",
@@ -285,6 +289,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "the-good-son-wake-up",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "The Good Son",
     title: "Wake Up",
     releaseType: "Single",
@@ -324,6 +329,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "coco-breezy-tonight",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Coco & Breezy",
     title: "Tonight",
     releaseType: "Single",
@@ -363,6 +369,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "mooglie-mont-rouge-your-body",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Mooglie, Mont Rouge",
     title: "Your Body",
     releaseType: "Single",
@@ -389,6 +396,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "nicky-doll-in-your-head-ft-anton-power-remix",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Nicky Doll",
     title: "In Your Head (feat. Anton Power Remix)",
     releaseType: "Single",
@@ -421,6 +429,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "nicky-doll-in-your-head-ft-luv-fondation-uk-ruff-loardez-remix",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Nicky Doll",
     title: "In Your Head (feat. Luv Fondation UK, Ruff Loardez Remix)",
     releaseType: "Single",
@@ -454,6 +463,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "nicky-doll-in-your-head-ft-vendom-remix",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Nicky Doll",
     title: "In Your Head (feat. Vendom Remix)",
     releaseType: "Single",
@@ -487,6 +497,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "nicky-doll-in-your-head-ft-daniel-distinkt-remix",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Nicky Doll",
     title: "In Your Head (feat. Daniel Distinkt Remix)",
     releaseType: "Single",
@@ -520,6 +531,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "nicky-doll-in-your-head",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Nicky Doll",
     title: "In Your Head",
     releaseType: "Single",
@@ -552,6 +564,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "jaidyn-hurst-every-wrong-right",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Jaidyn Hurst",
     title: "Every Wrong Right",
     releaseType: "Single",
@@ -584,6 +597,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "raeya-chen-moons-stars",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Raeya Chen",
     title: "Moons & Stars 星月",
     releaseType: "Single",
@@ -623,6 +637,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "jon-norris-the-flame",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Jon Norris",
     title: "The Flame",
     releaseType: "Single",
@@ -649,6 +664,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "ryu-junior-rodeo",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Ryu Junior",
     title: "Rodeo",
     releaseType: "Single",
@@ -694,6 +710,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "tayc-f-k-my-ex",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Tayc",
     title: "F**k My Ex",
     releaseType: "Single",
@@ -721,6 +738,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "tayc-rnboi-maman-prie",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Tayc, RnBoi",
     title: "Maman Prie",
     releaseType: "Single",
@@ -748,6 +766,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "odyssey-oh-la-mer",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Odyssey",
     title: "Oh La Mer",
     releaseType: "Single",
@@ -788,6 +807,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "sasson-jamy-nox-superstar",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Sasson, Jamy Nox",
     title: "Superstar",
     releaseType: "Single",
@@ -839,6 +859,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "elliott-on-s-oubliera",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Elliott",
     title: "On S'oubliera",
     releaseType: "Single",
@@ -865,6 +886,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "alac-if-you-want-it",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Alac",
     title: "If You Want It",
     releaseType: "Single",
@@ -891,6 +913,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "jey-vazz-you-know",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Jey Vazz",
     title: "you know",
     releaseType: "Single",
@@ -917,6 +940,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "sensey-bandit-chef",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "SenSey'",
     title: "Bandit Chef",
     releaseType: "Single",
@@ -943,6 +967,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "dreamstruck-shattered-dreams",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Dreamstruck",
     title: "Shattered Dreams",
     releaseType: "Single",
@@ -964,6 +989,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "tara-mcdonald-spaceman",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Tara McDonald",
     title: "Spaceman",
     releaseType: "Single",
@@ -990,6 +1016,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "smush-41",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "smush",
     title: "41",
     releaseType: "Single",
@@ -1011,6 +1038,7 @@ export const releases: ReleaseConfig[] = [
   },
   {
     slug: "tayc-girlfriend",
+    labelId: LABEL_ERA_MUSIC_ID,
     artist: "Tayc",
     title: "Girlfriend",
     releaseType: "Single",
