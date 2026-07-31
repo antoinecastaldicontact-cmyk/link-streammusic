@@ -74,6 +74,36 @@ export type Database = {
         }
         Relationships: []
       }
+      labels: {
+        Row: {
+          capi_secret_name: string
+          created_at: string
+          id: string
+          name: string
+          pixel_id: string
+          slug_prefix: string
+          updated_at: string
+        }
+        Insert: {
+          capi_secret_name: string
+          created_at?: string
+          id?: string
+          name: string
+          pixel_id: string
+          slug_prefix?: string
+          updated_at?: string
+        }
+        Update: {
+          capi_secret_name?: string
+          created_at?: string
+          id?: string
+          name?: string
+          pixel_id?: string
+          slug_prefix?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
