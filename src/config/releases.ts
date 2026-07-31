@@ -83,8 +83,17 @@ export type TrackLanguage =
   | "instrumental"
   | (string & {});
 
+/**
+ * Label ids — must match the rows seeded in the `labels` table.
+ * A release without `labelId` is treated as ERA Music.
+ */
+export const LABEL_ERA_MUSIC_ID = "11111111-1111-4111-8111-111111111111";
+export const LABEL_CR2_RECORDS_ID = "22222222-2222-4222-8222-222222222222";
+
 export interface ReleaseConfig {
   slug: string;
+  /** Owning label (labels table id). Defaults to ERA Music when absent. */
+  labelId?: string;
   artist: string;
   title: string;
   releaseType: "Single" | "EP" | "Album" | "Compilation";
@@ -99,6 +108,17 @@ export interface ReleaseConfig {
   trackLanguage?: TrackLanguage;
   shopUrl?: string;
 }
+
+/**
+ * Slug helper for NEW releases only. Existing release URLs are never
+ * rewritten — this is applied at creation time when a label has a
+ * `slug_prefix` (e.g. "cr2" -> "cr2/my-release").
+ */
+export function withSlugPrefix(slugPrefix: string, slug: string): string {
+  const prefix = slugPrefix.trim().replace(/^\/+|\/+$/g, "");
+  return prefix ? `${prefix}/${slug}` : slug;
+}
+
 
 const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
