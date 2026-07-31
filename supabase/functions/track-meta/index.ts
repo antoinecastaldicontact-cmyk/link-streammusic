@@ -168,6 +168,8 @@ serve(async (req) => {
 
     if (testEventCode) metaPayload.test_event_code = testEventCode;
 
+    console.log("[track-meta] Sending to Meta:", { event_id, event_name });
+
     const metaRes = await fetch(
       `https://graph.facebook.com/${META_API_VERSION}/${pixelId}/events?access_token=${accessToken}`,
       {
@@ -178,6 +180,11 @@ serve(async (req) => {
     );
 
     const metaResult = await metaRes.json();
+
+    console.log("[track-meta] Meta response status:", metaRes.status);
+    if (metaRes.status !== 200) {
+      console.log("[track-meta] Meta response body:", JSON.stringify(metaResult));
+    }
 
     return new Response(
       JSON.stringify({ success: true, event_id, meta: metaResult }),
