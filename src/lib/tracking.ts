@@ -143,6 +143,42 @@ export interface TrackEventData {
 export interface TrackEventOptions {
   consent?: boolean;
   eventId?: string;
+  /** Label id (labels table) used server-side to resolve the Meta dataset. */
+  labelId?: string;
+}
+
+/**
+ * Percent-decode a value until it is stable, so parameters are encoded
+ * exactly once. Fixes double-encoded values like "Wav%2520Of%2520Luv"
+ * (and single-encoded "Wav%20Of%20Luv") reaching Meta. The same normalised
+ * value is sent on both the browser pixel and the server payload, so both
+ * channels are byte-identical.
+ */
+function normalizeParamValue(value: string): string {
+  let current = value;
+  for (let i = 0; i < 3; i++) {
+    let decoded: string;
+    try {
+      decoded = decodeURIComponent(current);
+    } catch {
+      return current;
+    }
+    if (decoded === current) return current;
+    current = decoded;
+  }
+  return current;
+}
+
+function normalizeParams<T extends Record<string, string | string[] | boolean>>(
+  data: T,
+): Record<string, string | string[] | boolean> {
+  const out: Record<string, string | string[] | boolean> = {};
+  for (const [k, v] of Object.entries(data)) {
+    if (typeof v === "string") out[k] = normalizeParamValue(v);
+    else if (Array.isArray(v)) out[k] = v.map((item) => normalizeParamValue(item));
+    else out[k] = v;
+  }
+  return out;
 }
 
 export async function trackEvent(
@@ -153,6 +189,8 @@ export async function trackEvent(
   const opts: TrackEventOptions =
     typeof options === "boolean" ? { consent: options } : options;
   const consent = opts.consent ?? true;
+  // event_id is a plain random UUID — independent of any pixel/dataset id,
+  // so browser and server events dedupe regardless of the label.
   const eventId = opts.eventId ?? crypto.randomUUID();
 
   // Auto-enrich with device data on every event. Caller-supplied values in
@@ -171,12 +209,14 @@ export async function trackEvent(
     }
   }
 
+  const finalData = normalizeParams(enrichedData);
+
   // Browser pixel — consent-gated, kept for real-time attribution
   if (consent && typeof window !== "undefined" && (window as { fbq?: unknown }).fbq) {
     (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
       "track",
       eventName,
-      enrichedData,
+      finalData,
       { eventID: eventId },
     );
   }
@@ -189,6 +229,7 @@ export async function trackEvent(
     event_id: eventId,
     event_time: Math.floor(Date.now() / 1000),
     event_source_url: window.location.href,
+    label_id: opts.labelId,
     user_data: {
       client_user_agent: navigator.userAgent,
       external_id: fingerprint,
@@ -197,7 +238,7 @@ export async function trackEvent(
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       ...(consent ? { fbp: getCookie("_fbp"), fbc: getFbc() } : {}),
     },
-    custom_data: enrichedData,
+    custom_data: finalData,
   };
 
   try {
@@ -216,3 +257,4 @@ export async function trackEvent(
 
   return eventId;
 }
+
