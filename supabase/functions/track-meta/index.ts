@@ -52,15 +52,102 @@ async function getGeoForIp(ip: string): Promise<Record<string, string>> {
   }
 }
 
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const ERA_MUSIC_LABEL_ID = "11111111-1111-4111-8111-111111111111";
+
+interface LabelRow {
+  id: string;
+  name: string;
+  pixel_id: string;
+  capi_secret_name: string;
+}
+
+const LABEL_CACHE = new Map<string, LabelRow>();
+
+async function getLabel(labelId: string | null): Promise<LabelRow | null> {
+  const id = labelId && labelId.length > 0 ? labelId : ERA_MUSIC_LABEL_ID;
+  const cached = LABEL_CACHE.get(id);
+  if (cached) return cached;
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/labels?id=eq.${encodeURIComponent(id)}&select=id,name,pixel_id,capi_secret_name`,
+      {
+        headers: {
+          apikey: SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+        },
+      },
+    );
+    if (!res.ok) return null;
+    const rows = (await res.json()) as LabelRow[];
+    const row = rows?.[0] ?? null;
+    if (row) LABEL_CACHE.set(id, row);
+    return row;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Percent-decode until stable so every parameter is encoded exactly once.
+ * Mirrors the client-side normalisation, keeping browser and server
+ * payloads byte-identical (fixes "Wav%2520Of%2520Luv").
+ */
+function normalizeParamValue(value: string): string {
+  let current = value;
+  for (let i = 0; i < 3; i++) {
+    let decoded: string;
+    try {
+      decoded = decodeURIComponent(current);
+    } catch {
+      return current;
+    }
+    if (decoded === current) return current;
+    current = decoded;
+  }
+  return current;
+}
+
+function normalizeCustomData(data: unknown): unknown {
+  if (!data || typeof data !== "object") return data;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(data as Record<string, unknown>)) {
+    if (typeof v === "string") out[k] = normalizeParamValue(v);
+    else if (Array.isArray(v)) {
+      out[k] = v.map((item) => (typeof item === "string" ? normalizeParamValue(item) : item));
+    } else out[k] = v;
+  }
+  return out;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const pixelId = Deno.env.get("META_PIXEL_ID");
-    const accessToken = Deno.env.get("META_CAPIG_TOKEN");
     const testEventCode = Deno.env.get("META_TEST_EVENTCODE");
+
+    const body = await req.json();
+    const {
+      event_name,
+      event_id,
+      event_time,
+      event_source_url,
+      user_data,
+      custom_data,
+      label_id,
+    } = body;
+
+    // Resolve the Meta dataset from the release's label. Missing/unknown
+    // label falls back to ERA Music.
+    const label = await getLabel(typeof label_id === "string" ? label_id : null);
+    const pixelId = label?.pixel_id ?? Deno.env.get("META_PIXEL_ID");
+    const accessToken = label?.capi_secret_name
+      ? Deno.env.get(label.capi_secret_name)
+      : Deno.env.get("META_CAPIG_TOKEN");
 
     if (!pixelId || !accessToken) {
       return new Response(
@@ -68,9 +155,6 @@ serve(async (req) => {
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
-
-    const body = await req.json();
-    const { event_name, event_id, event_time, event_source_url, user_data, custom_data } = body;
 
     // Input validation — prevent CAPI injection / attribution pollution
     const ALLOWED_EVENTS = new Set([
@@ -154,6 +238,11 @@ serve(async (req) => {
       Object.assign(enrichedUserData, geo);
     }
 
+    const customDataWithLabel =
+      custom_data && typeof custom_data === "object" && label?.name
+        ? { ...custom_data, label: label.name }
+        : custom_data;
+
     const metaPayload: Record<string, unknown> = {
       data: [{
         event_name,
@@ -162,7 +251,7 @@ serve(async (req) => {
         event_source_url,
         action_source: "website",
         user_data: enrichedUserData,
-        custom_data,
+        custom_data: normalizeCustomData(customDataWithLabel),
       }],
     };
 
