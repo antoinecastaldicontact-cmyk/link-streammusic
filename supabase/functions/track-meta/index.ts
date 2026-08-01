@@ -294,9 +294,14 @@ serve(async (req) => {
 
     if (clientIp) {
       enrichedUserData.client_ip_address = clientIp;
-      const geo = await getGeoForIp(clientIp);
-      Object.assign(enrichedUserData, geo);
+      try {
+        const geo = await getGeoForIp(clientIp);
+        Object.assign(enrichedUserData, geo);
+      } catch (geoErr) {
+        console.log("[track-meta] geo: failed, event still sent:", String(geoErr));
+      }
     }
+
 
     const customDataWithLabel =
       custom_data && typeof custom_data === "object" && label?.name
