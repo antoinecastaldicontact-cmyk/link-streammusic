@@ -1,6 +1,11 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const META_API_VERSION = "v18.0";
+const TOKEN_SECRET_NAME = "META_CAPIG_TOKEN";
+const PIXEL_SECRET_NAME = "META_PIXEL_ID";
+
+// Hard budget for the WHOLE geo enrichment step (all providers combined).
+const GEO_TOTAL_BUDGET_MS = 800;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -17,52 +22,160 @@ async function sha256hex(value: string): Promise<string> {
 }
 
 // Geo cache: maps IP → { result, expiresAt }
-// Persists for the lifetime of the Edge Function instance (typically
-// 15 min before Deno recycles it). Reduces ip-api calls by 5-10x.
 const GEO_CACHE = new Map<string, { result: Record<string, string>; expiresAt: number }>();
+const GEO_CACHE_TTL_MS = 15 * 60 * 1000;
 
-const GEO_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+/**
+ * HTTPS-only geo lookup. ip-api.com (plain HTTP) has been removed: outbound
+ * HTTP can hang or be blocked in the Edge runtime.
+ * The caller enforces the global 800 ms budget; this function also respects
+ * the shared AbortSignal so no provider can outlive it.
+ */
+async function fetchGeo(ip: string, signal: AbortSignal): Promise<Record<string, string>> {
+  const result: Record<string, string> = {};
 
-async function getGeoForIp(ip: string): Promise<Record<string, string>> {
-  const now = Date.now();
-
-  const cached = GEO_CACHE.get(ip);
-  if (cached && cached.expiresAt > now) {
-    return cached.result;
+  // Provider A: ipinfo.io (token optional)
+  const token = Deno.env.get("IPINFO_TOKEN");
+  if (token) {
+    try {
+      const res = await fetch(
+        `https://ipinfo.io/${ip}/json?token=${token}`,
+        { signal },
+      );
+      if (res.ok) {
+        const geo = await res.json();
+        if (geo.city) result.ct = await sha256hex(geo.city);
+        if (geo.region) result.st = await sha256hex(geo.region);
+        if (geo.postal) result.zp = await sha256hex(geo.postal);
+        if (geo.country) result.country = await sha256hex(geo.country);
+        if (Object.keys(result).length > 0) return result;
+      } else {
+        await res.body?.cancel();
+      }
+    } catch (e) {
+      console.warn("[track-meta] geo provider ipinfo failed:", String(e));
+    }
   }
 
+  // Provider B: ipwho.is (HTTPS, keyless)
   try {
-    const geoRes = await fetch(
-      `https://ip-api.com/json/${ip}?fields=city,regionCode,zip,countryCode&lang=en`,
-      { signal: AbortSignal.timeout(1500) },
-    );
-    if (!geoRes.ok) return {};
+    const res = await fetch(`https://ipwho.is/${ip}`, { signal });
+    if (res.ok) {
+      const geo = await res.json();
+      if (geo.city) result.ct = await sha256hex(geo.city);
+      if (geo.region_code || geo.region) {
+        result.st = await sha256hex(geo.region_code || geo.region);
+      }
+      if (geo.postal) result.zp = await sha256hex(geo.postal);
+      if (geo.country_code) result.country = await sha256hex(geo.country_code);
+    } else {
+      await res.body?.cancel();
+    }
+  } catch (e) {
+    console.warn("[track-meta] geo provider ipwho failed:", String(e));
+  }
 
-    const geo = await geoRes.json();
-    const result: Record<string, string> = {};
-    if (geo.city) result.ct = await sha256hex(geo.city);
-    if (geo.regionCode) result.st = await sha256hex(geo.regionCode);
-    if (geo.zip) result.zp = await sha256hex(geo.zip);
-    if (geo.countryCode) result.country = await sha256hex(geo.countryCode);
+  return result;
+}
 
-    GEO_CACHE.set(ip, { result, expiresAt: now + GEO_CACHE_TTL_MS });
+/**
+ * Never throws, never exceeds GEO_TOTAL_BUDGET_MS. Returns {} on any problem.
+ */
+async function getGeoForIp(ip: string): Promise<Record<string, string>> {
+  const now = Date.now();
+  const cached = GEO_CACHE.get(ip);
+  if (cached && cached.expiresAt > now) return cached.result;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), GEO_TOTAL_BUDGET_MS);
+
+  try {
+    const result = await Promise.race([
+      fetchGeo(ip, controller.signal),
+      new Promise<Record<string, string>>((resolve) =>
+        setTimeout(() => resolve({}), GEO_TOTAL_BUDGET_MS)
+      ),
+    ]);
+    if (Object.keys(result).length > 0) {
+      GEO_CACHE.set(ip, { result, expiresAt: now + GEO_CACHE_TTL_MS });
+    }
     return result;
-  } catch {
+  } catch (e) {
+    console.warn("[track-meta] geo step abandoned:", String(e));
     return {};
+  } finally {
+    clearTimeout(timer);
+    controller.abort();
   }
 }
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+async function runSelfTest(): Promise<Response> {
+  const pixelId = Deno.env.get(PIXEL_SECRET_NAME) ?? null;
+  const token = Deno.env.get(TOKEN_SECRET_NAME) ?? null;
+
+  const out: Record<string, unknown> = {
+    selftest: true,
+    deployed_at_runtime: new Date().toISOString(),
+    label_row_resolved: Boolean(pixelId),
+    pixel_id: pixelId,
+    pixel_secret_name: PIXEL_SECRET_NAME,
+    token_secret_name: TOKEN_SECRET_NAME,
+    token_resolved: Boolean(token),
+  };
+
+  if (pixelId && token) {
+    try {
+      const res = await fetch(
+        `https://graph.facebook.com/${META_API_VERSION}/${pixelId}?access_token=${token}`,
+        { signal: AbortSignal.timeout(8000) },
+      );
+      out.validation_status = res.status;
+      out.validation_body = await res.text();
+    } catch (e) {
+      out.validation_status = null;
+      out.validation_error = String(e);
+    }
+  } else {
+    out.validation_skipped = "missing pixel_id or token";
   }
 
+  console.log("[track-meta][selftest]", JSON.stringify({
+    ...out,
+    validation_body: undefined,
+  }));
+
+  return new Response(JSON.stringify(out, null, 2), {
+    status: 200,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
+
+serve(async (req) => {
   try {
-    const pixelId = Deno.env.get("META_PIXEL_ID");
-    const accessToken = Deno.env.get("META_CAPIG_TOKEN");
+    if (req.method === "OPTIONS") {
+      return new Response("ok", { headers: corsHeaders });
+    }
+
+    const url = new URL(req.url);
+    if (url.searchParams.get("selftest") === "1") {
+      return await runSelfTest();
+    }
+
+    const pixelId = Deno.env.get(PIXEL_SECRET_NAME);
+    const accessToken = Deno.env.get(TOKEN_SECRET_NAME);
     const testEventCode = Deno.env.get("META_TEST_EVENTCODE");
 
+    console.log("[track-meta] invoked", JSON.stringify({
+      method: req.method,
+      pixel_resolved: Boolean(pixelId),
+      token_resolved: Boolean(accessToken),
+    }));
+
     if (!pixelId || !accessToken) {
+      console.error("[track-meta] Missing Meta credentials", {
+        pixel_secret: PIXEL_SECRET_NAME,
+        token_secret: TOKEN_SECRET_NAME,
+      });
       return new Response(
         JSON.stringify({ error: "Missing Meta credentials" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
@@ -143,14 +256,23 @@ serve(async (req) => {
       req.headers.get("x-real-ip") ||
       null;
 
-    console.log("[track-meta] Captured client IP:", clientIp,
-      "| IPv6:", clientIp?.includes(":") ?? false);
-
     const enrichedUserData: Record<string, unknown> = { ...user_data };
 
     if (clientIp) {
+      // Raw IP is always sent, independent of geo success.
       enrichedUserData.client_ip_address = clientIp;
-      const geo = await getGeoForIp(clientIp);
+      const geoStart = Date.now();
+      let geo: Record<string, string> = {};
+      try {
+        geo = await getGeoForIp(clientIp);
+      } catch (e) {
+        console.warn("[track-meta] geo threw, continuing without it:", String(e));
+      }
+      console.log("[track-meta] geo step", JSON.stringify({
+        event_id,
+        ms: Date.now() - geoStart,
+        fields: Object.keys(geo).length,
+      }));
       Object.assign(enrichedUserData, geo);
     }
 
@@ -168,23 +290,70 @@ serve(async (req) => {
 
     if (testEventCode) metaPayload.test_event_code = testEventCode;
 
-    const metaRes = await fetch(
-      `https://graph.facebook.com/${META_API_VERSION}/${pixelId}/events?access_token=${accessToken}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(metaPayload),
-      },
-    );
+    console.log("[track-meta] sending to Meta", JSON.stringify({
+      event_id,
+      event_name,
+      pixel_id: pixelId,
+    }));
 
-    const metaResult = await metaRes.json();
+    let metaStatus: number | null = null;
+    let metaBodyText = "";
+    try {
+      const metaRes = await fetch(
+        `https://graph.facebook.com/${META_API_VERSION}/${pixelId}/events?access_token=${accessToken}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(metaPayload),
+          signal: AbortSignal.timeout(10000),
+        },
+      );
+      metaStatus = metaRes.status;
+      metaBodyText = await metaRes.text();
+    } catch (e) {
+      console.error("[track-meta] Meta fetch failed", JSON.stringify({
+        event_id,
+        pixel_id: pixelId,
+        error: String(e),
+        stack: e instanceof Error ? e.stack : undefined,
+      }));
+      return new Response(
+        JSON.stringify({ success: false, event_id, error: "Meta request failed" }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    if (metaStatus === 200) {
+      console.log("[track-meta] Meta response", JSON.stringify({
+        event_id,
+        pixel_id: pixelId,
+        status: metaStatus,
+      }));
+    } else {
+      console.error("[track-meta] Meta non-200", JSON.stringify({
+        event_id,
+        pixel_id: pixelId,
+        status: metaStatus,
+        body: metaBodyText,
+      }));
+    }
+
+    let metaResult: unknown = metaBodyText;
+    try {
+      metaResult = JSON.parse(metaBodyText);
+    } catch {
+      // keep raw text
+    }
 
     return new Response(
-      JSON.stringify({ success: true, event_id, meta: metaResult }),
+      JSON.stringify({ success: metaStatus === 200, event_id, status: metaStatus, meta: metaResult }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error) {
-    console.error("track-meta error:", error);
+    console.error("[track-meta] unhandled error", JSON.stringify({
+      error: String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    }));
     return new Response(
       JSON.stringify({ error: "Internal server error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
