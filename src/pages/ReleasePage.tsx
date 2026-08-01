@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { ReleaseConfig, isNewRelease, LABEL_ERA_MUSIC_ID } from "@/config/releases";
+import { useEffect, useRef } from "react";
+import { ReleaseConfig, isNewRelease } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
 import { useVisitorCountry, filterDspsByCountry } from "@/lib/visitor-country";
-import { getLabel, DEFAULT_LABEL, type PublicLabel } from "@/lib/labels";
-import { initMetaPixel } from "@/lib/meta-pixel";
 
 
 interface ReleasePageProps {
@@ -15,16 +13,13 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
   const hasSentPageView = useRef(false);
   const visitorCountry = useVisitorCountry();
   const visibleDsps = filterDspsByCountry(release.dsps, visitorCountry);
-  const labelRef = useRef<PublicLabel>(DEFAULT_LABEL);
-  const [, setLabelResolved] = useState(false);
-  const labelId = release.labelId ?? LABEL_ERA_MUSIC_ID;
 
   const buildMetadata = (extra: Partial<TrackEventData> = {}): TrackEventData => ({
     content_name: release.title,
     artist_name: release.artist,
     release_type: release.releaseType,
     genre_primary: release.genrePrimary,
-    label: labelRef.current.name,
+    label: release.label ?? "ERA Music",
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
@@ -38,7 +33,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     artist_name: release.artist,
     release_type: release.releaseType,
     genre_primary: release.genrePrimary,
-    label: labelRef.current.name,
+    label: release.label ?? "ERA Music",
     is_new_release: isNewRelease(release),
     mood_tags: release.moodTags,
     track_language: release.trackLanguage,
@@ -75,14 +70,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     descEl.setAttribute("content", release.ogDescription);
 
     (async () => {
-      // Resolve the owning label first: it decides which single Meta pixel
-      // is initialised on this page and which dataset receives the events.
-      const label = await getLabel(labelId);
-      labelRef.current = label;
-      setLabelResolved(true);
-      initMetaPixel(label.pixel_id);
-
-      const eventId = await trackEvent("PageView", buildMetadata(), { labelId });
+      const eventId = await trackEvent("PageView", buildMetadata());
       await trackDspEvent("view", undefined, buildDspMetadata(eventId));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,11 +84,9 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
         content_category: dspName,
         dsp_chosen: dspName,
       }),
-      { labelId },
     );
     await trackDspEvent("click", dspName, buildDspMetadata(eventId));
   };
-
 
   return (
     <div className="min-h-screen bg-background flex justify-center">
