@@ -106,14 +106,22 @@ serve(async (req) => {
 
   // 1) Try cf-ipcountry first (free when populated by Cloudflare-fronted infra).
   let country = normalizeIso2(req.headers.get("cf-ipcountry"));
+  if (country) console.log("[visitor-country] resolved by cf-ipcountry header");
 
-  // 2/3) Fallback: resolve via HTTPS provider from the client IP.
+  // 2/3/4) Fallback: resolve via geolocation providers from the client IP.
   if (!country) {
     const ip = extractClientIp(req);
+    console.log("[visitor-country] client IP present:", !!ip);
     if (ip) {
-      country = await resolveCountryFromIp(ip);
+      try {
+        country = await resolveCountryFromIp(ip);
+      } catch (e) {
+        console.error("[visitor-country] resolution error:", String(e));
+        country = null;
+      }
     }
   }
+
 
   return new Response(
     JSON.stringify({ country: country || "XX" }),
