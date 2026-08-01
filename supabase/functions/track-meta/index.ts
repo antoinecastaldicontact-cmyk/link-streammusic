@@ -333,17 +333,24 @@ serve(async (req) => {
       },
     );
 
-    const metaResult = await metaRes.json();
-
+    const rawBody = await metaRes.text();
     console.log("[track-meta] Meta response status:", metaRes.status);
     if (metaRes.status !== 200) {
-      console.log("[track-meta] Meta response body:", JSON.stringify(metaResult));
+      console.error("[track-meta] Meta response body:", rawBody);
+    }
+
+    let metaResult: unknown;
+    try {
+      metaResult = JSON.parse(rawBody);
+    } catch {
+      metaResult = { raw: rawBody };
     }
 
     return new Response(
-      JSON.stringify({ success: true, event_id, meta: metaResult }),
+      JSON.stringify({ success: metaRes.status === 200, event_id, meta: metaResult }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
+
   } catch (error) {
     console.error("track-meta error:", error);
     return new Response(
