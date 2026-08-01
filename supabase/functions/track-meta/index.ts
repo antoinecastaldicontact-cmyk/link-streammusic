@@ -196,16 +196,25 @@ serve(async (req) => {
     // label falls back to ERA Music.
     const label = await getLabel(typeof label_id === "string" ? label_id : null);
     const pixelId = label?.pixel_id ?? Deno.env.get("META_PIXEL_ID");
-    const accessToken = label?.capi_secret_name
-      ? Deno.env.get(label.capi_secret_name)
-      : Deno.env.get("META_CAPIG_TOKEN");
+    const tokenSecretName = label?.capi_secret_name ?? "META_CAPIG_TOKEN";
+    const accessToken = Deno.env.get(tokenSecretName) ?? Deno.env.get("META_CAPIG_TOKEN");
+
+    // Log only WHETHER each required secret resolved — never its value.
+    console.log("[track-meta] secrets:", {
+      label_resolved: !!label,
+      pixel_id_resolved: !!pixelId,
+      token_secret_name: tokenSecretName,
+      token_resolved: !!accessToken,
+    });
 
     if (!pixelId || !accessToken) {
+      console.error("[track-meta] Missing Meta credentials — event not sent");
       return new Response(
         JSON.stringify({ error: "Missing Meta credentials" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+
 
     // Input validation — prevent CAPI injection / attribution pollution
     const ALLOWED_EVENTS = new Set([
