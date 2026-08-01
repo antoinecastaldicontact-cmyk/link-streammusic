@@ -18,39 +18,90 @@ async function sha256hex(value: string): Promise<string> {
 
 // Geo cache: maps IP → { result, expiresAt }
 // Persists for the lifetime of the Edge Function instance (typically
-// 15 min before Deno recycles it). Reduces ip-api calls by 5-10x.
+// 15 min before Deno recycles it). Reduces provider calls by 5-10x.
 const GEO_CACHE = new Map<string, { result: Record<string, string>; expiresAt: number }>();
 
 const GEO_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+const GEO_TIMEOUT_MS = 1200;
 
+async function fetchJsonWithTimeout(url: string): Promise<any | null> {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(GEO_TIMEOUT_MS) });
+    if (!res.ok) {
+      await res.body?.cancel();
+      return null;
+    }
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Best-effort geo enrichment. NEVER throws and NEVER blocks the Meta call
+ * for more than GEO_TIMEOUT_MS per provider.
+ * Provider order: ipwho.is (HTTPS, keyless) → ip-api.com (HTTP, keyless).
+ */
 async function getGeoForIp(ip: string): Promise<Record<string, string>> {
   const now = Date.now();
 
   const cached = GEO_CACHE.get(ip);
   if (cached && cached.expiresAt > now) {
+    console.log("[track-meta] geo: cache hit");
     return cached.result;
   }
 
   try {
-    const geoRes = await fetch(
-      `https://ip-api.com/json/${ip}?fields=city,regionCode,zip,countryCode&lang=en`,
-      { signal: AbortSignal.timeout(1500) },
-    );
-    if (!geoRes.ok) return {};
+    let provider: string | null = null;
+    let city: string | undefined;
+    let region: string | undefined;
+    let zip: string | undefined;
+    let country: string | undefined;
 
-    const geo = await geoRes.json();
+    // Provider A: ipwho.is — HTTPS, keyless, IPv4 + IPv6.
+    const a = await fetchJsonWithTimeout(`https://ipwho.is/${ip}`);
+    if (a && a.success !== false) {
+      provider = "ipwho.is";
+      city = a.city;
+      region = a.region_code;
+      zip = a.postal;
+      country = a.country_code;
+    }
+
+    // Provider B: ip-api.com — HTTP only on the free tier.
+    if (!provider) {
+      const b = await fetchJsonWithTimeout(
+        `http://ip-api.com/json/${ip}?fields=status,city,regionCode,zip,countryCode&lang=en`,
+      );
+      if (b && b.status === "success") {
+        provider = "ip-api.com";
+        city = b.city;
+        region = b.regionCode;
+        zip = b.zip;
+        country = b.countryCode;
+      }
+    }
+
+    if (!provider) {
+      console.log("[track-meta] geo: all providers failed — sending event without geo");
+      return {};
+    }
+
     const result: Record<string, string> = {};
-    if (geo.city) result.ct = await sha256hex(geo.city);
-    if (geo.regionCode) result.st = await sha256hex(geo.regionCode);
-    if (geo.zip) result.zp = await sha256hex(geo.zip);
-    if (geo.countryCode) result.country = await sha256hex(geo.countryCode);
+    if (city) result.ct = await sha256hex(city);
+    if (region) result.st = await sha256hex(region);
+    if (zip) result.zp = await sha256hex(zip);
+    if (country) result.country = await sha256hex(country);
 
+    console.log("[track-meta] geo: resolved by", provider);
     GEO_CACHE.set(ip, { result, expiresAt: now + GEO_CACHE_TTL_MS });
     return result;
-  } catch {
+  } catch (e) {
+    console.log("[track-meta] geo: unexpected failure, continuing without geo:", String(e));
     return {};
   }
 }
+
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
