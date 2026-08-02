@@ -220,11 +220,11 @@ serve(async (req) => {
 
     const url = new URL(req.url);
     if (url.searchParams.get("selftest") === "1") {
-      return await runSelfTest();
+      return await runSelfTest(url.searchParams.get("label"));
     }
 
-    const pixelId = Deno.env.get(PIXEL_SECRET_NAME);
-    const accessToken = Deno.env.get(TOKEN_SECRET_NAME);
+    let pixelId = Deno.env.get(PIXEL_SECRET_NAME);
+    let accessToken = Deno.env.get(TOKEN_SECRET_NAME);
     const testEventCode = Deno.env.get("META_TEST_EVENTCODE");
 
     console.log("[track-meta] invoked", JSON.stringify({
