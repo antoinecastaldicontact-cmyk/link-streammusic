@@ -18,17 +18,17 @@ let labelsPromise: Promise<PublicLabel[]> | null = null;
 
 export function fetchLabels(): Promise<PublicLabel[]> {
   if (!labelsPromise) {
-    labelsPromise = supabase
-      .from("labels")
-      .select("id,name,slug_prefix,pixel_id")
-      .then(({ data, error }) => {
-        if (error) {
-          labelsPromise = null;
-          console.error("labels fetch error:", error.message);
-          return [];
-        }
-        return (data ?? []) as PublicLabel[];
-      });
+    labelsPromise = (async () => {
+      const { data, error } = await supabase
+        .from("labels")
+        .select("id,name,slug_prefix,pixel_id");
+      if (error) {
+        labelsPromise = null;
+        console.error("labels fetch error:", error.message);
+        return [];
+      }
+      return (data ?? []) as PublicLabel[];
+    })();
   }
   return labelsPromise;
 }
