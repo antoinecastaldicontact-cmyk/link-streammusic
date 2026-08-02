@@ -113,6 +113,37 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/felguk-vai",
+    artist: "Felguk",
+    title: "Vai",
+    releaseType: "Single",
+    artworkUrl: "/artworks/felguk-vai.webp",
+    ogTitle: "Felguk - Vai",
+    ogDescription: "Listen to Vai by Felguk, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/5oZm10kAc0uymv7WVqHHwy?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/felguk-vai&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/vai/6788417749?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/felguk-vai&utm_content=apple_music",
+        },
+        {
+          name: "Beatport",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+          url: "https://www.beatport.com/fr/release/vai-extended-mix/7170976?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/felguk-vai&utm_content=beatport",
+        }
+    ],
+    genrePrimary: "afro_house",
+    label: "CR2 Records",
+    releaseDate: "2026-08-03",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/topic-aha",
     artist: "Topic",
     title: "AHA",
