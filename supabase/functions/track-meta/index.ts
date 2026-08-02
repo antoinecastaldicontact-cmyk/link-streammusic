@@ -109,17 +109,79 @@ async function getGeoForIp(ip: string): Promise<Record<string, string>> {
   }
 }
 
-async function runSelfTest(): Promise<Response> {
-  const pixelId = Deno.env.get(PIXEL_SECRET_NAME) ?? null;
-  const token = Deno.env.get(TOKEN_SECRET_NAME) ?? null;
+interface LabelRow {
+  name: string;
+  slug_prefix: string;
+  pixel_id: string;
+  capi_secret_name: string;
+}
+
+let LABELS_CACHE: { rows: LabelRow[]; expiresAt: number } | null = null;
+
+async function getLabels(): Promise<LabelRow[]> {
+  const now = Date.now();
+  if (LABELS_CACHE && LABELS_CACHE.expiresAt > now) return LABELS_CACHE.rows;
+
+  const url = Deno.env.get("SUPABASE_URL");
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) return [];
+
+  try {
+    const res = await fetch(
+      `${url}/rest/v1/labels?select=name,slug_prefix,pixel_id,capi_secret_name`,
+      {
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+        signal: AbortSignal.timeout(3000),
+      },
+    );
+    if (!res.ok) {
+      await res.body?.cancel();
+      return [];
+    }
+    const rows = (await res.json()) as LabelRow[];
+    LABELS_CACHE = { rows, expiresAt: now + 5 * 60 * 1000 };
+    return rows;
+  } catch (e) {
+    console.warn("[track-meta] labels lookup failed:", String(e));
+    return [];
+  }
+}
+
+/** Resolve the label from the first path segment of the event source URL. */
+async function resolveLabelByUrl(eventSourceUrl: string): Promise<LabelRow | null> {
+  let prefix = "";
+  try {
+    const segments = new URL(eventSourceUrl).pathname.split("/").filter(Boolean);
+    if (segments.length > 1) prefix = segments[0].toLowerCase();
+  } catch {
+    return null;
+  }
+  const labels = await getLabels();
+  return labels.find((l) => (l.slug_prefix ?? "").toLowerCase() === prefix) ?? null;
+}
+
+async function resolveLabelByName(name: string): Promise<LabelRow | null> {
+  const labels = await getLabels();
+  return labels.find((l) => l.name === name) ?? null;
+}
+
+async function runSelfTest(labelName: string | null): Promise<Response> {
+  const label = labelName ? await resolveLabelByName(labelName) : null;
+
+  const pixelSecretName = label ? "labels.pixel_id" : PIXEL_SECRET_NAME;
+  const tokenSecretName = label ? label.capi_secret_name : TOKEN_SECRET_NAME;
+  const pixelId = label ? label.pixel_id : (Deno.env.get(PIXEL_SECRET_NAME) ?? null);
+  const token = Deno.env.get(tokenSecretName) ?? null;
 
   const out: Record<string, unknown> = {
     selftest: true,
     deployed_at_runtime: new Date().toISOString(),
-    label_row_resolved: Boolean(pixelId),
+    label_requested: labelName,
+    label_row_resolved: labelName ? Boolean(label) : Boolean(pixelId),
+    label_name: label?.name ?? null,
     pixel_id: pixelId,
-    pixel_secret_name: PIXEL_SECRET_NAME,
-    token_secret_name: TOKEN_SECRET_NAME,
+    pixel_secret_name: pixelSecretName,
+    token_secret_name: tokenSecretName,
     token_resolved: Boolean(token),
   };
 
@@ -158,11 +220,11 @@ serve(async (req) => {
 
     const url = new URL(req.url);
     if (url.searchParams.get("selftest") === "1") {
-      return await runSelfTest();
+      return await runSelfTest(url.searchParams.get("label"));
     }
 
-    const pixelId = Deno.env.get(PIXEL_SECRET_NAME);
-    const accessToken = Deno.env.get(TOKEN_SECRET_NAME);
+    let pixelId = Deno.env.get(PIXEL_SECRET_NAME);
+    let accessToken = Deno.env.get(TOKEN_SECRET_NAME);
     const testEventCode = Deno.env.get("META_TEST_EVENTCODE");
 
     console.log("[track-meta] invoked", JSON.stringify({
@@ -249,6 +311,28 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+
+    // Multi-label: resolve the dataset from the URL's slug prefix. Any failure
+    // falls back to the default ERA Music pixel/token resolved above.
+    try {
+      const label = await resolveLabelByUrl(event_source_url);
+      if (label?.pixel_id) {
+        const labelToken = Deno.env.get(label.capi_secret_name);
+        if (labelToken) {
+          pixelId = label.pixel_id;
+          accessToken = labelToken;
+        } else {
+          console.warn("[track-meta] label token secret missing", JSON.stringify({
+            label: label.name,
+            token_secret: label.capi_secret_name,
+          }));
+        }
+      }
+    } catch (e) {
+      console.warn("[track-meta] label resolution failed:", String(e));
+    }
+
+
 
     const clientIp =
       req.headers.get("cf-connecting-ip") ||

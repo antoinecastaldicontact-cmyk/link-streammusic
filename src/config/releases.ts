@@ -98,6 +98,8 @@ export interface ReleaseConfig {
   moodTags?: MoodTag[];
   trackLanguage?: TrackLanguage;
   shopUrl?: string;
+  /** Label row id (public.labels). Omitted = ERA Music (default dataset). */
+  labelId?: string;
 }
 
 const NEW_RELEASE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
