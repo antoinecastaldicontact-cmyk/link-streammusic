@@ -33,16 +33,42 @@ export function fetchLabels(): Promise<PublicLabel[]> {
   return labelsPromise;
 }
 
-export async function resolvePixelId(labelId?: string): Promise<string> {
-  if (!labelId) return DEFAULT_PIXEL_ID;
+export const DEFAULT_LABEL_NAME = "ERA Music";
+
+/**
+ * Resolve the label from the URL slug prefix — exactly like track-meta does.
+ * The first path segment is matched against labels.slug_prefix; no match → ERA.
+ * `releaseLabelId` is only used to warn on contradictions, never to decide.
+ */
+export async function resolveLabelFromUrl(
+  pathname: string = window.location.pathname,
+  releaseLabelId?: string,
+): Promise<{ name: string; pixelId: string; labelId?: string }> {
+  const firstSegment = pathname.split("/").filter(Boolean)[0]?.toLowerCase() ?? "";
+  let labels: PublicLabel[] = [];
   try {
-    const labels = await fetchLabels();
-    const match = labels.find((l) => l.id === labelId);
-    return match?.pixel_id || DEFAULT_PIXEL_ID;
+    labels = await fetchLabels();
   } catch {
-    return DEFAULT_PIXEL_ID;
+    labels = [];
   }
+
+  const match = labels.find(
+    (l) => (l.slug_prefix ?? "").toLowerCase().replace(/^\/|\/$/g, "") === firstSegment,
+  );
+
+  const resolved = match
+    ? { name: match.name, pixelId: match.pixel_id || DEFAULT_PIXEL_ID, labelId: match.id }
+    : { name: DEFAULT_LABEL_NAME, pixelId: DEFAULT_PIXEL_ID, labelId: undefined };
+
+  if (releaseLabelId && releaseLabelId !== resolved.labelId) {
+    console.warn(
+      `[labels] release labelId "${releaseLabelId}" contradicts URL prefix "${firstSegment}" — using URL prefix (${resolved.name}).`,
+    );
+  }
+
+  return resolved;
 }
+
 
 let initializedPixelId: string | null = null;
 

@@ -3,7 +3,7 @@ import { ReleaseConfig, isNewRelease } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
 import { useVisitorCountry, filterDspsByCountry } from "@/lib/visitor-country";
-import { resolvePixelId, initPixel } from "@/lib/labels";
+import { resolveLabelFromUrl, initPixel } from "@/lib/labels";
 
 
 interface ReleasePageProps {
@@ -71,7 +71,14 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     descEl.setAttribute("content", release.ogDescription);
 
     (async () => {
-      initPixel(await resolvePixelId(release.labelId));
+      const resolvedLabel = await resolveLabelFromUrl(
+        window.location.pathname,
+        release.labelId,
+      );
+      console.log(
+        `[pixel] label="${resolvedLabel.name}" pixel_id=${resolvedLabel.pixelId}`,
+      );
+      initPixel(resolvedLabel.pixelId);
       const eventId = await trackEvent("PageView", buildMetadata());
       await trackDspEvent("view", undefined, buildDspMetadata(eventId));
     })();
