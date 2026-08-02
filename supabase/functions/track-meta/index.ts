@@ -312,6 +312,28 @@ serve(async (req) => {
       );
     }
 
+    // Multi-label: resolve the dataset from the URL's slug prefix. Any failure
+    // falls back to the default ERA Music pixel/token resolved above.
+    try {
+      const label = await resolveLabelByUrl(event_source_url);
+      if (label?.pixel_id) {
+        const labelToken = Deno.env.get(label.capi_secret_name);
+        if (labelToken) {
+          pixelId = label.pixel_id;
+          accessToken = labelToken;
+        } else {
+          console.warn("[track-meta] label token secret missing", JSON.stringify({
+            label: label.name,
+            token_secret: label.capi_secret_name,
+          }));
+        }
+      }
+    } catch (e) {
+      console.warn("[track-meta] label resolution failed:", String(e));
+    }
+
+
+
     const clientIp =
       req.headers.get("cf-connecting-ip") ||
       req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
