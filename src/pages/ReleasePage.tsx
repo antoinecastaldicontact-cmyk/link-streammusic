@@ -71,6 +71,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     descEl.setAttribute("content", release.ogDescription);
 
     (async () => {
+      initPixel(await resolvePixelId(release.labelId));
       const eventId = await trackEvent("PageView", buildMetadata());
       await trackDspEvent("view", undefined, buildDspMetadata(eventId));
     })();
