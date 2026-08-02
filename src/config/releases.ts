@@ -113,6 +113,37 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/topic-aha",
+    artist: "Topic",
+    title: "AHA",
+    releaseType: "Single",
+    artworkUrl: "/artworks/topic-aha.webp",
+    ogTitle: "Topic - AHA",
+    ogDescription: "Listen to AHA by Topic, out now on all platforms.",
+    dsps: [
+        {
+          name: "Spotify",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+          url: "https://open.spotify.com/intl-fr/track/6qL1lMdzVr9Gdz2VoZoCLy?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/topic-aha&utm_content=spotify",
+        },
+        {
+          name: "Apple Music",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+          url: "https://geo.music.apple.com/album/aha/6776279751?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/topic-aha&utm_content=apple_music",
+        },
+        {
+          name: "Beatport",
+          logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+          url: "https://www.beatport.com/release/aha-extended-mix/7017555?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/topic-aha&utm_content=beatport",
+        }
+    ],
+    genrePrimary: "afro_house",
+    label: "CR2 Records",
+    releaseDate: "2026-07-24",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "yofunders-nube-feel-better",
     artist: "Yofunders, NUBE",
     title: "Feel Better",
