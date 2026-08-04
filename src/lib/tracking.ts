@@ -176,11 +176,6 @@ export async function trackEvent(
   if (consent && typeof window !== "undefined") {
     const args: unknown[] = ["track", eventName, enrichedData, { eventID: eventId }];
     if (isPixelReady() && (window as { fbq?: unknown }).fbq) {
-      (window as unknown as { fbq: (...a: unknown[]) => void })(
-        ...([] as never[]),
-      );
-    }
-    if (isPixelReady() && (window as { fbq?: unknown }).fbq) {
       (window as unknown as { fbq: (...a: unknown[]) => void }).fbq(...args);
     } else {
       queueFbqTrack(args);
