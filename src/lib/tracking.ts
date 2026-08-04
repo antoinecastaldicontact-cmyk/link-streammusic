@@ -1,3 +1,5 @@
+import { isPixelReady, queueFbqTrack } from "@/lib/labels";
+
 const FUNCTIONS_URL = import.meta.env.VITE_SUPABASE_URL + "/functions/v1/track-meta";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
