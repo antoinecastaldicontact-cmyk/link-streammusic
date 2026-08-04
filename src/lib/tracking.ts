@@ -171,14 +171,20 @@ export async function trackEvent(
     }
   }
 
-  // Browser pixel — consent-gated, kept for real-time attribution
-  if (consent && typeof window !== "undefined" && (window as { fbq?: unknown }).fbq) {
-    (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
-      "track",
-      eventName,
-      enrichedData,
-      { eventID: eventId },
-    );
+  // Browser pixel — consent-gated, kept for real-time attribution.
+  // Buffered when the pixel is not initialised yet; eventID is preserved.
+  if (consent && typeof window !== "undefined") {
+    const args: unknown[] = ["track", eventName, enrichedData, { eventID: eventId }];
+    if (isPixelReady() && (window as { fbq?: unknown }).fbq) {
+      (window as unknown as { fbq: (...a: unknown[]) => void })(
+        ...([] as never[]),
+      );
+    }
+    if (isPixelReady() && (window as { fbq?: unknown }).fbq) {
+      (window as unknown as { fbq: (...a: unknown[]) => void }).fbq(...args);
+    } else {
+      queueFbqTrack(args);
+    }
   }
 
   // Server-side via Supabase Edge Function → Meta CAPI direct
