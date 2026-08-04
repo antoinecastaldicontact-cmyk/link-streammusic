@@ -75,7 +75,7 @@ let initPending = false;
 
 type Fbq = (...args: unknown[]) => void;
 
-/** Buffered browser fbq("track", …) calls made before the pixel is ready. */
+/** Browser fbq("track", …) calls made before the pixel was ready. */
 const pendingTracks: unknown[][] = [];
 
 function getFbq(): Fbq | undefined {
@@ -86,8 +86,9 @@ export function isPixelReady(): boolean {
   return initializedPixelId !== null;
 }
 
-/** Queue a browser-side fbq call until the pixel is initialised. */
+/** Buffer a browser-side fbq call until the pixel is initialised. */
 export function queueFbqTrack(args: unknown[]) {
+  console.warn("[pixel] fbq not ready — buffering call:", args[1], args[3]);
   pendingTracks.push(args);
 }
 
@@ -96,6 +97,7 @@ function flushPendingTracks() {
   if (!fbq) return;
   while (pendingTracks.length) {
     const args = pendingTracks.shift()!;
+    console.log("[pixel] flushing buffered fbq call:", args[1], args[3]);
     fbq(...args);
   }
 }
@@ -124,7 +126,7 @@ export function initPixel(pixelId: string) {
   }
 
   initPending = true;
-  console.warn("[pixel] fbq not available yet — deferring init, retrying…");
+  console.warn("[pixel] fbq unavailable — deferring init, retrying every 100ms (5s cap)");
   const start = Date.now();
   const timer = setInterval(() => {
     const f = getFbq();
