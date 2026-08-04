@@ -1,11 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
-
-/**
- * Public label shape. The client MUST only ever read these columns —
- * capi_secret_name is server-side only and never exposed to the browser.
- */
 export interface PublicLabel {
-  id: string;
   name: string;
   slug_prefix: string;
   pixel_id: string;
@@ -13,60 +6,38 @@ export interface PublicLabel {
 
 /** ERA Music — default dataset used when a release has no labelId. */
 export const DEFAULT_PIXEL_ID = "1272936565032247";
-
-let labelsPromise: Promise<PublicLabel[]> | null = null;
-
-export function fetchLabels(): Promise<PublicLabel[]> {
-  if (!labelsPromise) {
-    labelsPromise = (async () => {
-      const { data, error } = await supabase
-        .from("labels")
-        .select("id,name,slug_prefix,pixel_id");
-      if (error) {
-        labelsPromise = null;
-        console.error("labels fetch error:", error.message);
-        return [];
-      }
-      return (data ?? []) as PublicLabel[];
-    })();
-  }
-  return labelsPromise;
-}
-
 export const DEFAULT_LABEL_NAME = "ERA Music";
 
 /**
- * Resolve the label from the URL slug prefix — exactly like track-meta does.
- * The first path segment is matched against labels.slug_prefix; no match → ERA.
+ * Browser-only build-time mapping. The labels table remains the source of
+ * truth for server-side CAPI resolution in track-meta.
+ */
+export const PIXEL_LABELS: readonly PublicLabel[] = [
+  { name: DEFAULT_LABEL_NAME, slug_prefix: "", pixel_id: DEFAULT_PIXEL_ID },
+  { name: "CR2 Records", slug_prefix: "cr2", pixel_id: "1932831854052584" },
+];
+
+/**
+ * Resolve the label synchronously from the URL slug prefix.
+ * The first path segment is matched against the static mapping; no match → ERA.
  * `releaseLabelId` is only used to warn on contradictions, never to decide.
  */
-export async function resolveLabelFromUrl(
+export function resolveLabelFromUrl(
   pathname: string = window.location.pathname,
-  releaseLabelId?: string,
-): Promise<{ name: string; pixelId: string; labelId?: string }> {
+): { name: string; pixelId: string } {
   const firstSegment = pathname.split("/").filter(Boolean)[0]?.toLowerCase() ?? "";
-  let labels: PublicLabel[] = [];
-  try {
-    labels = await fetchLabels();
-  } catch {
-    labels = [];
-  }
-
-  const match = labels.find(
+  const match = PIXEL_LABELS.find(
     (l) => (l.slug_prefix ?? "").toLowerCase().replace(/^\/|\/$/g, "") === firstSegment,
   );
 
-  const resolved = match
-    ? { name: match.name, pixelId: match.pixel_id || DEFAULT_PIXEL_ID, labelId: match.id }
-    : { name: DEFAULT_LABEL_NAME, pixelId: DEFAULT_PIXEL_ID, labelId: undefined };
-
-  if (releaseLabelId && releaseLabelId !== resolved.labelId) {
+  if (!match) {
     console.warn(
-      `[labels] release labelId "${releaseLabelId}" contradicts URL prefix "${firstSegment}" — using URL prefix (${resolved.name}).`,
+      `[pixel] unknown label prefix "${firstSegment}" — falling back to ${DEFAULT_LABEL_NAME}.`,
     );
+    return { name: DEFAULT_LABEL_NAME, pixelId: DEFAULT_PIXEL_ID };
   }
 
-  return resolved;
+  return { name: match.name, pixelId: match.pixel_id || DEFAULT_PIXEL_ID };
 }
 
 
@@ -96,7 +67,8 @@ function flushPendingTracks() {
   const fbq = getFbq();
   if (!fbq) return;
   while (pendingTracks.length) {
-    const args = pendingTracks.shift()!;
+    const args = pendingTracks.shift();
+    if (!args) return;
     console.log("[pixel] flushing buffered fbq call:", args[1], args[3]);
     fbq(...args);
   }
@@ -143,5 +115,14 @@ export function initPixel(pixelId: string) {
       );
     }
   }, RETRY_INTERVAL_MS);
+}
+
+// Resolve and initialise during module evaluation, before React renders or
+// release-specific effects run. fbq's bootstrap queue is already created by
+// the static head script; retry/buffering remains as a safety net.
+if (typeof window !== "undefined") {
+  const resolvedLabel = resolveLabelFromUrl(window.location.pathname);
+  console.log(`[pixel] label="${resolvedLabel.name}" pixel_id=${resolvedLabel.pixelId}`);
+  initPixel(resolvedLabel.pixelId);
 }
 
