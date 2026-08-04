@@ -71,15 +71,77 @@ export async function resolveLabelFromUrl(
 
 
 let initializedPixelId: string | null = null;
+let initPending = false;
 
-/** Initialise exactly one Meta pixel per page (idempotent). */
-export function initPixel(pixelId: string) {
-  if (initializedPixelId) return;
-  const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-  if (!fbq) return;
-  initializedPixelId = pixelId;
-  // autoConfig off: DOM-inferred events fire without an eventID and break
-  // browser/server deduplication against our CAPI events.
-  fbq("set", "autoConfig", false, pixelId);
-  fbq("init", pixelId);
+type Fbq = (...args: unknown[]) => void;
+
+/** Browser fbq("track", …) calls made before the pixel was ready. */
+const pendingTracks: unknown[][] = [];
+
+function getFbq(): Fbq | undefined {
+  return (window as unknown as { fbq?: Fbq }).fbq;
 }
+
+export function isPixelReady(): boolean {
+  return initializedPixelId !== null;
+}
+
+/** Buffer a browser-side fbq call until the pixel is initialised. */
+export function queueFbqTrack(args: unknown[]) {
+  console.warn("[pixel] fbq not ready — buffering call:", args[1], args[3]);
+  pendingTracks.push(args);
+}
+
+function flushPendingTracks() {
+  const fbq = getFbq();
+  if (!fbq) return;
+  while (pendingTracks.length) {
+    const args = pendingTracks.shift()!;
+    console.log("[pixel] flushing buffered fbq call:", args[1], args[3]);
+    fbq(...args);
+  }
+}
+
+const RETRY_INTERVAL_MS = 100;
+const MAX_WAIT_MS = 5000;
+
+/** Initialise exactly one Meta pixel per page (idempotent, retries for fbq). */
+export function initPixel(pixelId: string) {
+  if (initializedPixelId || initPending) return;
+
+  const doInit = (fbq: Fbq) => {
+    initializedPixelId = pixelId;
+    initPending = false;
+    // autoConfig off: DOM-inferred events fire without an eventID and break
+    // browser/server deduplication against our CAPI events.
+    fbq("set", "autoConfig", false, pixelId);
+    fbq("init", pixelId);
+    flushPendingTracks();
+  };
+
+  const fbq = getFbq();
+  if (fbq) {
+    doInit(fbq);
+    return;
+  }
+
+  initPending = true;
+  console.warn("[pixel] fbq unavailable — deferring init, retrying every 100ms (5s cap)");
+  const start = Date.now();
+  const timer = setInterval(() => {
+    const f = getFbq();
+    if (f) {
+      clearInterval(timer);
+      doInit(f);
+      return;
+    }
+    if (Date.now() - start >= MAX_WAIT_MS) {
+      clearInterval(timer);
+      initPending = false;
+      console.error(
+        "[pixel] fbq still unavailable after 5s — browser pixel not initialised (server events unaffected).",
+      );
+    }
+  }, RETRY_INTERVAL_MS);
+}
+
