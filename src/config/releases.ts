@@ -113,6 +113,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "amour-propre-we-are-fire",
+    artist: "Amour Propre",
+    title: "We Are Fire",
+    releaseType: "Single",
+    artworkUrl: "/artworks/amour-propre-we-are-fire.webp",
+    ogTitle: "Amour Propre - We Are Fire",
+    ogDescription: "Listen to We Are Fire by Amour Propre, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/7ilYgGXYEkJ0uk0Loxr8ym?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=amour-propre-we-are-fire&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/we-are-fire/6792843819?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=amour-propre-we-are-fire&utm_content=apple_music",
+      }
+    ],
+    genrePrimary: "afro_house",
+    label: "ERA Music",
+    releaseDate: "2026-07-24",
+    moodTags: ["sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/mosimann-move-it-to-the-drums",
     artist: "Mosimann",
     title: "Move It 2 The Drum",
