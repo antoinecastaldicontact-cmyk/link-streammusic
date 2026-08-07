@@ -113,6 +113,43 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/mosimann-move-it-to-the-drums",
+    artist: "Mosimann",
+    title: "Move It To The Drums",
+    releaseType: "Single",
+    artworkUrl: "/artworks/mosimann-move-it-to-the-drums.webp",
+    ogTitle: "Mosimann - Move It To The Drums",
+    ogDescription: "Listen to Move It To The Drums by Mosimann, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/album/0lFDSIIvQTrwlgCjAUy8pD?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/mosimann-move-it-to-the-drums&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/move-it-2-the-drum-feat-mc-ambush/6792668177?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/mosimann-move-it-to-the-drums&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/album/1033399292?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/mosimann-move-it-to-the-drums&utm_content=deezer",
+        countries: ["FR"],
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/release/move-it-2-the-drum-extended-mix/7227600?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/mosimann-move-it-to-the-drums&utm_content=beatport",
+      }
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-08-07",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/felguk-vai",
     artist: "Felguk",
     title: "Vai",
