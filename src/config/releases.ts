@@ -115,11 +115,11 @@ export const releases: ReleaseConfig[] = [
   {
     slug: "cr2/mosimann-move-it-to-the-drums",
     artist: "Mosimann",
-    title: "Move It To The Drums",
+    title: "Move It 2 The Drum",
     releaseType: "Single",
     artworkUrl: "/artworks/mosimann-move-it-to-the-drums.webp",
-    ogTitle: "Mosimann - Move It To The Drums",
-    ogDescription: "Listen to Move It To The Drums by Mosimann, out now on all platforms.",
+    ogTitle: "Mosimann - Move It 2 The Drum",
+    ogDescription: "Listen to Move It 2 The Drum by Mosimann, out now on all platforms.",
     dsps: [
       {
         name: "Spotify",
