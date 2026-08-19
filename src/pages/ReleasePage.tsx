@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ReleaseConfig, isNewRelease } from "@/config/releases";
+import { ReleaseConfig, isNewRelease, isMetaTracked, type DSP } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
 import { useVisitorCountry, filterDspsByCountry } from "@/lib/visitor-country";
