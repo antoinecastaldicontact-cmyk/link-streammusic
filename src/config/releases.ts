@@ -2,12 +2,42 @@ export interface DSP {
   name: string;
   logo: string;
   url: string;
-  /** When false, click is not sent to Meta CAPI / pixel. Defaults to true. */
+  /** Override manuel. Quand false, le clic n'est pas envoyé à Meta.
+      L'analytics interne (dsp_events) est TOUJOURS enregistré. */
   tracked?: boolean;
   /** If set, DSP appears only for visitors from these countries (ISO-2). */
   countries?: string[];
   /** If set, DSP is hidden from visitors of these countries (ISO-2). */
   excludeCountries?: string[];
+}
+
+/**
+ * DSP qui sont des stores d'achat/téléchargement, pas des plateformes de
+ * streaming. Leurs clics ne doivent JAMAIS être envoyés à Meta : ils ne
+ * produisent pas de stream et polluent l'optimisation des campagnes.
+ * Comparaison insensible à la casse et aux espaces.
+ */
+export const STORE_DSPS = [
+  "beatport",
+  "bandcamp",
+  "itunes",
+  "traxsource",
+  "juno download",
+  "junodownload",
+  "amazon",
+] as const;
+
+export function isStoreDsp(name: string): boolean {
+  return (STORE_DSPS as readonly string[]).includes(name.trim().toLowerCase());
+}
+
+/**
+ * Un clic est envoyé à Meta seulement si le DSP n'est pas un store ET que
+ * `tracked` n'est pas explicitement à false.
+ */
+export function isMetaTracked(dsp: DSP): boolean {
+  if (isStoreDsp(dsp.name)) return false;
+  return dsp.tracked !== false;
 }
 
 /**

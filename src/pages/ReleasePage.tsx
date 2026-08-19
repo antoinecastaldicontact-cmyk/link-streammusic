@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ReleaseConfig, isNewRelease } from "@/config/releases";
+import { ReleaseConfig, isNewRelease, isMetaTracked, type DSP } from "@/config/releases";
 import { trackEvent, type TrackEventData } from "@/lib/tracking";
 import { trackDspEvent } from "@/lib/dsp-analytics";
 import { useVisitorCountry, filterDspsByCountry } from "@/lib/visitor-country";
@@ -27,7 +27,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     ...extra,
   });
 
-  const buildDspMetadata = (eventId: string) => ({
+  const buildDspMetadata = (eventId?: string) => ({
     event_id: eventId,
     release_slug: release.slug,
     artist_name: release.artist,
@@ -76,16 +76,21 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [release]);
 
-  const handleDspClick = async (dspName: string, tracked: boolean) => {
-    if (!tracked) return;
-    const eventId = await trackEvent(
-      "ViewContent",
-      buildMetadata({
-        content_category: dspName,
-        dsp_chosen: dspName,
-      }),
-    );
-    await trackDspEvent("click", dspName, buildDspMetadata(eventId));
+  const handleDspClick = async (dsp: DSP) => {
+    let eventId: string | undefined;
+    if (isMetaTracked(dsp)) {
+      eventId = await trackEvent(
+        "ViewContent",
+        buildMetadata({
+          content_category: dsp.name,
+          dsp_chosen: dsp.name,
+        }),
+      );
+    }
+    // L'analytics interne est enregistré pour TOUS les DSP, y compris les
+    // stores et les DSP non trackés côté Meta. C'est le bug corrigé ici :
+    // l'ancien early-return supprimait aussi cette ligne.
+    await trackDspEvent("click", dsp.name, buildDspMetadata(eventId));
   };
 
   return (
@@ -144,7 +149,7 @@ const ReleasePage = ({ release }: ReleasePageProps) => {
               href={dsp.url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => handleDspClick(dsp.name, dsp.tracked !== false)}
+              onClick={() => handleDspClick(dsp)}
               className="group flex items-center justify-between gap-3 rounded-md border border-foreground/10 bg-foreground/[0.03] px-4 py-3 transition-all hover:bg-foreground/[0.08] hover:border-foreground/30 active:scale-[0.99]"
             >
               <div className="flex items-center gap-3 min-w-0">
