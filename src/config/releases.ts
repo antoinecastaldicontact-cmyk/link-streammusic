@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "jon-norris-the-flame",
+    artist: "Jon Norris",
+    title: "The Flame",
+    releaseType: "Single",
+    artworkUrl: "/artworks/jon-norris-the-flame.webp",
+    ogTitle: "Jon Norris - The Flame",
+    ogDescription: "Listen to The Flame by Jon Norris, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/0ln8D8qRJu5iwALKOEjLYH?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jon-norris-the-flame&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/the-flame/6767533373?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=jon-norris-the-flame&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "pop",
+    label: "ERA Music",
+    releaseDate: "2026-08-27",
+    moodTags: ["sunset", "chill"],
+    trackLanguage: "en",
+  },
+  {
     slug: "amour-propre-we-are-fire",
     artist: "Amour Propre",
     title: "We Are Fire",
