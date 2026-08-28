@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/hugel-ultra-nate-free",
+    artist: "Hugel, Ultra Naté",
+    title: "Free",
+    releaseType: "Single",
+    artworkUrl: "/artworks/hugel-ultra-nate-free.webp",
+    ogTitle: "Hugel, Ultra Naté - Free",
+    ogDescription: "Listen to Free by Hugel, Ultra Naté, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/7igzyhUbcM75ETumhe4nzO?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/hugel-ultra-nate-free&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/free-you-got-to-live/1849430187?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/hugel-ultra-nate-free&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-08-28",
+    moodTags: ["party", "running", "sport", "sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/hugel-matt-sassari-it-feels-so-good",
     artist: "Hugel, Matt Sassari",
     title: "It Feels So Good",
