@@ -143,6 +143,33 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/hugel-matt-sassari-it-feels-so-good",
+    artist: "Hugel, Matt Sassari",
+    title: "It Feels So Good",
+    releaseType: "Single",
+    artworkUrl: "/artworks/hugel-matt-sassari-it-feels-so-good.webp",
+    ogTitle: "Hugel, Matt Sassari - It Feels So Good",
+    ogDescription:
+      "Listen to It Feels So Good by Hugel, Matt Sassari, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/7xFy1kfgGWJWTpx1vSHBLi?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/hugel-matt-sassari-it-feels-so-good&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/it-feels-so-good-feat-sonique/1764524398?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/hugel-matt-sassari-it-feels-so-good&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-08-28",
+    moodTags: ["party", "running", "sport", "sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "jon-norris-the-flame",
     artist: "Jon Norris",
     title: "The Flame",
