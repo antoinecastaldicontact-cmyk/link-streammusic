@@ -143,6 +143,33 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/matt-sassari-mont-rouge-wav-of-luv",
+    artist: "Matt Sassari, Mont Rouge",
+    title: "Wav Of Luv",
+    releaseType: "Single",
+    artworkUrl: "/artworks/matt-sassari-mont-rouge-wav-of-luv.webp",
+    ogTitle: "Matt Sassari, Mont Rouge - Wav Of Luv",
+    ogDescription:
+      "Listen to Wav Of Luv by Matt Sassari, Mont Rouge, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/4kmxETbclaI5PF9uqKKM8q?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/matt-sassari-mont-rouge-wav-of-luv&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/waves-of-luv/6780914450?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/matt-sassari-mont-rouge-wav-of-luv&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-09-09",
+    moodTags: ["party", "sunset"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/hugel-ultra-nate-free",
     artist: "Hugel, Ultra Naté",
     title: "Free",
