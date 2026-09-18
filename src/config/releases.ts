@@ -143,6 +143,38 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/robbie-williams-miss-monique-beauty-in-us",
+    artist: "Robbie Williams, Miss Monique",
+    title: "Beauty In Us",
+    releaseType: "Single",
+    artworkUrl: "/artworks/robbie-williams-miss-monique-beauty-in-us.webp",
+    ogTitle: "Robbie Williams, Miss Monique - Beauty In Us",
+    ogDescription:
+      "Listen to Beauty In Us by Robbie Williams, Miss Monique, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/71Blq9QnHZaCsKl2Cugrjf?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/robbie-williams-miss-monique-beauty-in-us&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/beauty-in-us-single/6801061596?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/robbie-williams-miss-monique-beauty-in-us&utm_content=apple_music",
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/release/beauty-in-us-club-mix/7350663?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/robbie-williams-miss-monique-beauty-in-us&utm_content=beatport",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-09-18",
+    moodTags: ["party", "sport"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/matt-sassari-mont-rouge-wav-of-luv",
     artist: "Matt Sassari, Mont Rouge",
     title: "Wav Of Luv",
