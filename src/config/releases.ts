@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "smush-milkweed-butterfly",
+    artist: "smush",
+    title: "milkweed butterfly",
+    releaseType: "Single",
+    artworkUrl: "/artworks/smush-milkweed-butterfly.webp",
+    ogTitle: "smush - milkweed butterfly",
+    ogDescription: "Listen to milkweed butterfly by smush, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/21NzjKNEzy2k8hCP9N79NC?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=smush-milkweed-butterfly&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/milkweed-butterfly-single/6808042784?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=smush-milkweed-butterfly&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "indie_rock",
+    label: "ERA Music",
+    releaseDate: "2026-09-28",
+    moodTags: ["shoegaze", "indie_rock", "upbeat", "energetic"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/robbie-williams-miss-monique-beauty-in-us",
     artist: "Robbie Williams, Miss Monique",
     title: "Beauty In Us",
