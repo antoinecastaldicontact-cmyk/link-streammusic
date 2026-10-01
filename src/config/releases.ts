@@ -143,6 +143,38 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/solto-how-far-chale",
+    artist: "Solto",
+    title: "How Far (Chalé)",
+    releaseType: "Single",
+    artworkUrl: "/artworks/solto-how-far-chale.webp",
+    ogTitle: "Solto - How Far (Chalé)",
+    ogDescription: "Listen to How Far (Chalé) by Solto, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/37HPZFrrfZQypCa639cMO5?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/solto-how-far-chale&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/how-far-chal%C3%A9-single/6805974773?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/solto-how-far-chale&utm_content=apple_music",
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/release/how-far-chale-extended-mix/7396511?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/solto-how-far-chale&utm_content=beatport",
+        tracked: false,
+      },
+    ],
+    genrePrimary: "afro_house",
+    label: "CR2 Records",
+    releaseDate: "2026-10-01",
+    moodTags: ["party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "smush-milkweed-butterfly",
     artist: "smush",
     title: "milkweed butterfly",
