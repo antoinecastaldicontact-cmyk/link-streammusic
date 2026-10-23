@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "innelea-reckless-69",
+    artist: "Innelea",
+    title: "Reckless 69",
+    releaseType: "Single",
+    artworkUrl: "/artworks/innelea-reckless-69.webp",
+    ogTitle: "Innelea - Reckless 69",
+    ogDescription: "Listen to Reckless 69 by Innelea, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/1E0ZDpi7dXbZAM5LuSG5uk?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=innelea-reckless-69&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/reckless-69/6812988573?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=innelea-reckless-69&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-10-23",
+    moodTags: ["party", "training"],
+    trackLanguage: "en",
+  },
+  {
     slug: "cr2/solto-how-far-chale",
     artist: "Solto",
     title: "How Far (Chalé)",
