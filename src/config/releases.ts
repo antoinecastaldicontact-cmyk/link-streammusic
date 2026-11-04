@@ -161,12 +161,6 @@ export const releases: ReleaseConfig[] = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
         url: "https://geo.music.apple.com/album/my-best-friend-single/6817397355?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/matt-sassari-brandy-giacobbi-my-best-friend&utm_content=apple_music",
       },
-      {
-        name: "Beatport",
-        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
-        url: "https://www.beatport.com/fr/release/my-best-friend-extended-mix/7553060?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/matt-sassari-brandy-giacobbi-my-best-friend&utm_content=beatport",
-        tracked: false,
-      },
     ],
     genrePrimary: "dance",
     label: "CR2 Records",
