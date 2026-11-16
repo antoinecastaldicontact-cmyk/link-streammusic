@@ -15,6 +15,7 @@ export const DEFAULT_LABEL_NAME = "ERA Music";
 export const PIXEL_LABELS: readonly PublicLabel[] = [
   { name: DEFAULT_LABEL_NAME, slug_prefix: "", pixel_id: DEFAULT_PIXEL_ID },
   { name: "CR2 Records", slug_prefix: "cr2", pixel_id: "1932831854052584" },
+  { name: "129", slug_prefix: "129", pixel_id: "2629940044189850" },
 ];
 
 /**

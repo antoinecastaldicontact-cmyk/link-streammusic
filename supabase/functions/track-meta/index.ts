@@ -322,10 +322,14 @@ serve(async (req) => {
           pixelId = label.pixel_id;
           accessToken = labelToken;
         } else {
-          console.warn("[track-meta] label token secret missing", JSON.stringify({
+          console.warn("[track-meta] label token secret missing — skipping send", JSON.stringify({
             label: label.name,
             token_secret: label.capi_secret_name,
           }));
+          return new Response(
+            JSON.stringify({ success: false, skipped: "missing_label_token", label: label.name }),
+            { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+          );
         }
       }
     } catch (e) {
