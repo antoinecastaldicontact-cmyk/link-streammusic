@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "129/polaroit-licht",
+    artist: "Polaroit",
+    title: "Licht",
+    releaseType: "Single",
+    artworkUrl: "/artworks/polaroit-licht.webp",
+    ogTitle: "Polaroit - Licht",
+    ogDescription: "Listen to Licht by Polaroit, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/1O734bP5HGBqwJ5llyFT4k?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/polaroit-licht&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/licht/6820534348?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/polaroit-licht&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "melodic_techno",
+    label: "129",
+    releaseDate: "2026-11-13",
+    moodTags: ["chill", "drive", "focus"],
+    trackLanguage: "de",
+  },
+  {
     slug: "cr2/matt-sassari-brandy-giacobbi-my-best-friend",
     artist: "Matt Sassari, Brandy, GIACOBBI",
     title: "My Best Friend",
