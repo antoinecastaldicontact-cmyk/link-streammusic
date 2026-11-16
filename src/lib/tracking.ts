@@ -1,4 +1,4 @@
-import { isPixelReady, queueFbqTrack } from "@/lib/labels";
+import { getMainPixelId, hasExtraPixels, isPixelReady, queueFbqTrack } from "@/lib/labels";
 
 const FUNCTIONS_URL = import.meta.env.VITE_SUPABASE_URL + "/functions/v1/track-meta";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -176,7 +176,9 @@ export async function trackEvent(
   // Browser pixel — consent-gated, kept for real-time attribution.
   // Buffered when the pixel is not initialised yet; eventID is preserved.
   if (consent && typeof window !== "undefined") {
-    const args: unknown[] = ["track", eventName, enrichedData, { eventID: eventId }];
+    const args: unknown[] = hasExtraPixels()
+      ? ["trackSingle", getMainPixelId(), eventName, enrichedData, { eventID: eventId }]
+      : ["track", eventName, enrichedData, { eventID: eventId }];
     console.log(`[pixel] fbq track "${eventName}" eventID=${eventId}`);
     if (isPixelReady() && (window as { fbq?: unknown }).fbq) {
       (window as unknown as { fbq: (...a: unknown[]) => void }).fbq(...args);

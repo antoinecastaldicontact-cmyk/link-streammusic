@@ -19,6 +19,32 @@ export const PIXEL_LABELS: readonly PublicLabel[] = [
 ];
 
 /**
+ * Client-owned pixels that receive ONLY one bare PageView (browser-only) on a
+ * specific release path. Keys: path without leading/trailing slashes, lowercase.
+ */
+export const EXTRA_PIXELS_BY_SLUG: Record<string, string[]> = {
+  "129/polaroit-licht": ["1229903631621410"],
+};
+
+export function getExtraPixelsForPath(pathname: string): string[] {
+  const key = pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+  return EXTRA_PIXELS_BY_SLUG[key] ?? [];
+}
+
+let resolvedExtraPixels: string[] = [];
+let resolvedMainPixelId: string = DEFAULT_PIXEL_ID;
+
+export function hasExtraPixels(): boolean {
+  return resolvedExtraPixels.length > 0;
+}
+
+export function getMainPixelId(): string {
+  return resolvedMainPixelId;
+}
+
+let extraPixelsInitialized = false;
+
+/**
  * Resolve the label synchronously from the URL slug prefix.
  * The first path segment is matched against the static mapping; no match → ERA.
  * `releaseLabelId` is only used to warn on contradictions, never to decide.
@@ -89,6 +115,14 @@ export function initPixel(pixelId: string) {
     // browser/server deduplication against our CAPI events.
     fbq("set", "autoConfig", false, pixelId);
     fbq("init", pixelId);
+    if (!extraPixelsInitialized && resolvedExtraPixels.length) {
+      extraPixelsInitialized = true;
+      for (const id of resolvedExtraPixels) {
+        fbq("set", "autoConfig", false, id);
+        fbq("init", id);
+        fbq("trackSingle", id, "PageView");
+      }
+    }
     flushPendingTracks();
   };
 
@@ -124,6 +158,8 @@ export function initPixel(pixelId: string) {
 if (typeof window !== "undefined") {
   const resolvedLabel = resolveLabelFromUrl(window.location.pathname);
   console.log(`[pixel] label="${resolvedLabel.name}" pixel_id=${resolvedLabel.pixelId}`);
+  resolvedMainPixelId = resolvedLabel.pixelId;
+  resolvedExtraPixels = getExtraPixelsForPath(window.location.pathname);
   initPixel(resolvedLabel.pixelId);
 }
 
