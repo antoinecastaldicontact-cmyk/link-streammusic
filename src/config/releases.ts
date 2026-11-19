@@ -143,6 +143,32 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "creange-the-spark-raphael-palacci-remix-ft-raphael-palacci",
+    artist: "Creange",
+    title: "The Spark - Raphael Palacci Remix (feat. Raphael Palacci)",
+    releaseType: "Single",
+    artworkUrl: "/artworks/creange-the-spark-raphael-palacci-remix-ft-raphael-palacci.jpg",
+    ogTitle: "Creange - The Spark - Raphael Palacci Remix (feat. Raphael Palacci)",
+    ogDescription: "Listen to The Spark - Raphael Palacci Remix (feat. Raphael Palacci) by Creange, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/4tpedClcJBn2SkGfnkFEhH?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=creange-the-spark-raphael-palacci-remix-ft-raphael-palacci&utm_content=spotify",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/the-spark-raphael-palacci-remix/6820105649?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=creange-the-spark-raphael-palacci-remix-ft-raphael-palacci&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-11-04",
+    moodTags: ["running", "sport", "training"],
+    trackLanguage: "en",
+  },
+  {
     slug: "129/polaroit-licht",
     artist: "Polaroit",
     title: "Licht",
