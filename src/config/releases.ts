@@ -143,6 +143,27 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "ryu-junior-believe-vice-city-outro",
+    artist: "Ryu Junior",
+    title: "Believe (Vice City Outro)",
+    releaseType: "Single",
+    artworkUrl: "/artworks/ryu-junior-believe-vice-city-outro.jpg",
+    ogTitle: "Ryu Junior - Believe (Vice City Outro)",
+    ogDescription: "Listen to Believe (Vice City Outro) by Ryu Junior, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/32PdGfA5DaBvzHMMRBD2a1?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=ryu-junior-believe-vice-city-outro&utm_content=spotify",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "ERA Music",
+    releaseDate: "2026-11-20",
+    moodTags: ["chill", "party"],
+    trackLanguage: "fr",
+  },
+  {
     slug: "creange-the-spark-raphael-palacci-remix-ft-raphael-palacci",
     artist: "Creange",
     title: "The Spark - Raphael Palacci Remix (feat. Raphael Palacci)",
