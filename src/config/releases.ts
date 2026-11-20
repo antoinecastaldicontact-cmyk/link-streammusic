@@ -143,6 +143,37 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/tcts-iclwy",
+    artist: "TCTS",
+    title: "ICLWY",
+    releaseType: "Single",
+    artworkUrl: "/artworks/tcts-iclwy.jpg",
+    ogTitle: "TCTS - ICLWY",
+    ogDescription: "Listen to ICLWY by TCTS, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/2wHc7uv5RLwZyIzaanAxkS?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/tcts-iclwy&utm_content=spotify",
+      },
+      {
+        name: "Beatport",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/beatport.svg",
+        url: "https://www.beatport.com/fr/release/iclwy-extended-mix/7669648?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/tcts-iclwy&utm_content=beatport",
+      },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/iclwy-single/6828961539?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/tcts-iclwy&utm_content=apple_music",
+      },
+    ],
+    genrePrimary: "dance",
+    label: "CR2 Records",
+    releaseDate: "2026-11-20",
+    moodTags: ["chill", "party"],
+    trackLanguage: "en",
+  },
+  {
     slug: "ryu-junior-believe-vice-city-outro",
     artist: "Ryu Junior",
     title: "Believe (Vice City Outro)",
