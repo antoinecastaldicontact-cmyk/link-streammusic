@@ -143,6 +143,26 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "129/montemarco-qui-je-suis",
+    artist: "Montemarco",
+    title: "Qui je suis",
+    releaseType: "Single",
+    artworkUrl: "/artworks/montemarco-qui-je-suis.jpg",
+    ogTitle: "Montemarco - Qui je suis",
+    ogDescription: "Listen to Qui je suis by Montemarco, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/4rsfYBYSSgPM7gLjLJ4TXg?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/montemarco-qui-je-suis&utm_content=spotify",
+      },
+    ],
+    genrePrimary: "pop",
+    label: "129",
+    releaseDate: "2026-11-11",
+    trackLanguage: "fr",
+  },
+  {
     slug: "cr2/tcts-iclwy",
     artist: "TCTS",
     title: "ICLWY",
