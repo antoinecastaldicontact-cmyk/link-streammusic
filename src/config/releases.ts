@@ -156,6 +156,17 @@ export const releases: ReleaseConfig[] = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
         url: "https://open.spotify.com/intl-fr/track/4rsfYBYSSgPM7gLjLJ4TXg?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/montemarco-qui-je-suis&utm_content=spotify",
       },
+      {
+        name: "Apple Music",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/applemusic.svg",
+        url: "https://geo.music.apple.com/album/qui-je-suis/6830792746?i=6830793031&utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/montemarco-qui-je-suis&utm_content=apple_music",
+      },
+      {
+        name: "Deezer",
+        logo: "/icons/deezer.webp",
+        url: "https://www.deezer.com/track/4392090821?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=129/montemarco-qui-je-suis&utm_content=deezer",
+        countries: ["FR"],
+      },
     ],
     genrePrimary: "pop",
     label: "129",
