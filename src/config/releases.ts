@@ -143,6 +143,27 @@ export function isNewRelease(release: ReleaseConfig): boolean | undefined {
 
 export const releases: ReleaseConfig[] = [
   {
+    slug: "cr2/kolsch-alex-kennon-superburro",
+    artist: "Kölsch, Alex Kennon",
+    title: "Superburro",
+    releaseType: "Single",
+    artworkUrl: "/artworks/kolsch-alex-kennon-superburro.jpg",
+    ogTitle: "Kölsch, Alex Kennon - Superburro",
+    ogDescription: "Listen to Superburro by Kölsch, Alex Kennon, out now on all platforms.",
+    dsps: [
+      {
+        name: "Spotify",
+        logo: "https://cdn.jsdelivr.net/npm/simple-icons@14/icons/spotify.svg",
+        url: "https://open.spotify.com/intl-fr/track/1bKY1o28K42tGY5rI1eQH8?utm_source=fanlinkhub&utm_medium=referral&utm_campaign=cr2/kolsch-alex-kennon-superburro&utm_content=spotify",
+      },
+    ],
+    genrePrimary: "melodic_techno",
+    label: "CR2 Records",
+    releaseDate: "2026-11-27",
+    moodTags: ["late_night", "party"],
+    trackLanguage: "instrumental",
+  },
+  {
     slug: "129/montemarco-qui-je-suis",
     artist: "Montemarco",
     title: "Qui je suis",
